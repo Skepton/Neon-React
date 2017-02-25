@@ -1,0 +1,29 @@
+{
+  "name": "Neon",
+  "version": "0.0.1",
+  "main": "index.js",
+  "description": "MVC",
+  "author": "Anton Lantz <xeinon@gmail.com>",
+  "dependencies": {
+    "nunjucks":"*",
+    "path":"*",
+    "async":"2.0.0",
+    "http":"*",
+    "crypto": "*",
+    "bcryptjs": "*",
+    "express": "4.14.0",
+    "express-session": "*",
+    "sequelize": "*",
+    "serve-favicon": "*",
+    "cookie-parser": "*",
+    "body-parser":"*",
+    "redis": "*",
+    "connect-redis":"*",
+    "connect-flash": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "winston": "*",
+    "moment": "*",
+    "json_merger": "*"
+  }
+}
