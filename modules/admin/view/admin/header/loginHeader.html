@@ -1,0 +1,11 @@
+{% if user %}
+  <a href="/admin" class="loggedIn">
+    <i class="material-icons">person</i>
+    <p class="content">
+      <span class="text">Logged in as: </span>
+      <span class="user">{{ user.displayname }}</span>
+    </p>
+  </a>
+{% else  %}
+  <a href="/login">Log in</a>
+{% endif %}

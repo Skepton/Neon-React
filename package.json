@@ -13,6 +13,7 @@
     "bcryptjs": "*",
     "express": "4.14.0",
     "express-session": "*",
+    "pg":"*",
     "sequelize": "*",
     "serve-favicon": "*",
     "cookie-parser": "*",
@@ -24,6 +25,7 @@
     "passport-local": "*",
     "winston": "*",
     "moment": "*",
+    "continuation-local-storage": "*",
     "json_merger": "*"
   }
 }
