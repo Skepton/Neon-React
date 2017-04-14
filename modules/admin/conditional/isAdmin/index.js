@@ -3,7 +3,6 @@ var getNamespace = require('continuation-local-storage').getNamespace,
 
 module.exports = function(){
   var request = context.get('request');
-  console.log(request.user.dataValues.admin === true);
   if(request.user && request.user.dataValues.admin === true){
     return true;
   } else {

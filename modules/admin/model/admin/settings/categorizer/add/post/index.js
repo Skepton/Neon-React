@@ -1,19 +1,31 @@
 var path = require('path'),
-    fallback = require(path.join(appRoot,'/lib/module/fallback')),
-    abstract = fallback('@model/abstract');
+    Neon_model_abstract = require(path.join(appRoot,'abstract/model'));
 
-class categorizerAdd extends abstract {
-  constructor(db, request){
-    super(db, request);
+class Neon_model_categorizer_add extends Neon_model_abstract {
+  constructor(){
+    super();
+    this.init();
   }
 
-  categorySave(callback){
+  init(){
+    var self = this;
+    self.modelData = self.request.body;
+    self.save(function(category, err){
+      if(category && !err) {
+        self.successAction();
+      } else {
+        self.failureAction(err);
+      }
+    });
+  }
+
+  save(callback){
     var self = this;
     var parentCategory = self.request.params.parentCategory === 'root' ? null : self.request.params.parentCategory;
-    self.models.category.create(self.request.body).then(function(category){
+    self.schemas.category.create(self.modelData).then(function(category){
       if(category){
         if(parentCategory){
-          self.models.category.findOne({where: {id: parentCategory}}).then(function(parent){
+          self.schemas.category.findOne({where: {id: parentCategory}}).then(function(parent){
             parent.addChildren(category);
             callback(category, undefined);
           });
@@ -26,20 +38,15 @@ class categorizerAdd extends abstract {
     });
   }
 
-  successAction(request, response){
-    request.flash('notice', 'Category saved successful!');
-    response.redirect('/admin/settings/categorizer');
+  successAction(){
+    this.request.flash('notice', 'Category saved successful!');
+    this.response.redirect('/admin/settings/categorizer');
   }
 
-  failureAction(request, response, error){
-    request.flash('error', 'Error saving category!');
-    response.redirect('/admin/settings/categorizer');
+  failureAction(err){
+    this.request.flash('error', 'Error saving category!');
+    this.response.redirect('/admin/settings/categorizer');
   }
 }
 
-module.exports = function(request, callback){
-  var categorizerAddInstance = new categorizerAdd(db, request);
-  categorizerAddInstance.categorySave(function(data, err){
-    callback(categorizerAddInstance, err);
-  });
-}
+module.exports = Neon_model_categorizer_add;

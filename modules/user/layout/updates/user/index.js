@@ -7,7 +7,7 @@ module.exports = {
           "name": "login",
           "model": "user",
           "type": "html",
-          "template": "content/user.html",
+          "template": "default/content/user.html",
           "blocks": []
         }
       }

@@ -6,7 +6,7 @@ class Neon_model_categorizer_add extends Neon_model_abstract {
     super();
   }
   getData(callback){
-    callback(this.request.params.parentCategory);
+    callback({"id": this.request.params.parentCategory});
   }
 }
 

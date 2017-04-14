@@ -14,7 +14,12 @@ class Neon_model_login extends Neon_model_abstract {
   init(){
     var self = this;
 
-    self.processRequest();
+    this.modelData = {
+      "username": this.request.body.username.toLowerCase(),
+      "password": this.request.body.password
+    }
+    this.loginSetup();
+
     self.authenticate(function(user, err){
         if(user && !err) {
           self.successAction();
@@ -22,14 +27,6 @@ class Neon_model_login extends Neon_model_abstract {
           self.failureAction(err);
         }
     });
-  }
-
-  processRequest(){
-    this.modelData = {
-      "username": this.request.body.username.toLowerCase(),
-      "password": this.request.body.password
-    }
-    this.loginSetup();
   }
 
   loginSetup(){

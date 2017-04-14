@@ -1,5 +1,4 @@
 module.exports = [
-  //Admin
   {
     "type": "get",
     "path": "/admin",
@@ -20,13 +19,13 @@ module.exports = [
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['categorizer']
-  }/*,
+  },
   {
     "type": "get",
     "path": "/admin/settings/categorizer/add/child/:parentCategory",
     "conditional": "isAdmin",
     "handle": "admin",
-    "handleUpdates": ['categorizer/add']
+    "handleUpdates": ['categorizerAdd']
   },
   {
     "type": "get",
@@ -34,5 +33,5 @@ module.exports = [
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['composer']
-  }*/
+  }
 ]

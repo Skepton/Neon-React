@@ -1,6 +1,8 @@
-<!--{{data|dump}}-->
-<a href="/admin/new/post">New Post</a>
-{% for article in data %}
+<!--{{model|dump}}-->
+<form action="/admin/new/post" method="post">
+    <button type="submit" value="newPost">New Post</button>
+</form>
+{% for article in model %}
 
   {# Print Headline of Article #}
   {% if article.body %}

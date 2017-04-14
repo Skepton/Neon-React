@@ -1,10 +1,22 @@
 var path = require('path'),
-    fallback = require(path.join(appRoot,'/lib/module/fallback')),
-    abstract = fallback('@model/abstract');
+    Neon_model_abstract = require(path.join(appRoot,'abstract/model'));
 
-class composerSave extends abstract {
-  constructor(db, request){
-    super(db, request);
+class Neon_model_composer_save extends Neon_model_abstract {
+  constructor(){
+    super();
+    this.init();
+  }
+
+  init(){
+    var self = this;
+
+    self.savePost(function(err){
+      if(!err) {
+        self.successAction();
+      } else {
+        self.failureAction(err);
+      }
+    });
   }
 
   savePost(callback){
@@ -12,10 +24,10 @@ class composerSave extends abstract {
     var hashid = self.request.params.hashid;
     var postBody = self.request.body;
     var category = self.request.body.category;
-    self.models.post.update(postBody,{where: {hashid: hashid}}).then(function(post){
+    self.schemas.post.update(postBody,{where: {hashid: hashid}}).then(function(post){
       if(post){
         if(category){
-          self.models.category.findOne({where: {id: category}}).then(function(category){
+          self.schemas.category.findOne({where: {id: category}}).then(function(category){
             if(category){
               category.addPost(post);
               callback(false);
@@ -24,9 +36,11 @@ class composerSave extends abstract {
             }
           });
         } else {
-          self.models.post.findById(post[0]).then(function(post){
+          self.schemas.post.findById(post[0]).then(function(post){
             post.getCategory().then(function(category){
-              category.removePost(post);
+              if(category){
+                category.removePost(post);  
+              }
             });
           });
           callback(false);
@@ -36,20 +50,15 @@ class composerSave extends abstract {
       }
     });
   }
-  successAction(request, response){
-    request.flash('notice', 'Post saved successful!');
-    response.redirect('/admin');
+  successAction(){
+    this.request.flash('notice', 'Post saved successful!');
+    this.response.redirect('/admin');
   }
 
-  failureAction(request, response, error){
-    request.flash('error', 'Error saving post!');
-    response.redirect('/admin');
+  failureAction(error){
+    this.request.flash('error', 'Error saving post!');
+    this.response.redirect('/admin');
   }
 }
 
-module.exports = function(request, callback){
-  var composerSaveInstance = new composerSave(db, request);
-  composerSaveInstance.savePost(function(data){
-    callback(composerSaveInstance, data);
-  });
-}
+module.exports = Neon_model_composer_save;
