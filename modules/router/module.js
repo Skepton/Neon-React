@@ -17,7 +17,6 @@ class Neon_router extends Neon_abstract {
   ** Module Init
   */
   init(){
-    console.log(this.name+' Initiates');
     this.eventSetup();
   }
 
@@ -36,7 +35,7 @@ class Neon_router extends Neon_abstract {
   */
   routerSetup(parentPath, parentConditional){
     var self = this;
-    var layoutSetups = Neon.getFolders('/layout/setup/');
+    var layoutSetups = Neon.getFolders('app/layout/setup/');
 
     async.forEachOf(layoutSetups, function(routePaths, method, callbackLayouts){
       async.eachSeries(routePaths, function(routePath, callbackRoutePaths){
@@ -109,7 +108,7 @@ class Neon_router extends Neon_abstract {
   }
 
   handlePost(route){
-    var modelClass = Neon.getFile('/model/'+route.model);
+    var modelClass = Neon.getFile('app/model/'+route.model);
     var modelInstance = new modelClass();
   }
 
@@ -117,7 +116,7 @@ class Neon_router extends Neon_abstract {
     var self = this;
     var layoutHandle = route.handle;
     var layoutUpdates;
-    var layout = Neon.getFile('/layout/handles/'+layoutHandle, false);
+    var layout = Neon.getFile('app/layout/handles/'+layoutHandle, false);
 
     if(route.handleUpdates){
       layoutUpdates = route.handleUpdates;
@@ -128,7 +127,7 @@ class Neon_router extends Neon_abstract {
 
     var layoutUpdateFiles = [];
     layoutUpdates.forEach(function(handleUpdates){
-      var updateFiles = Neon.getAllFiles('/layout/updates/'+handleUpdates);
+      var updateFiles = Neon.getAllFiles('app/layout/updates/'+handleUpdates);
       if(updateFiles.length > 0){
         updateFiles.forEach(function(updateFile){
           layoutUpdateFiles.push(updateFile);
@@ -247,7 +246,7 @@ class Neon_router extends Neon_abstract {
 
   loadBlock(block, callback){
     var self = this;
-    var blockClass = Neon.getFile('/block/'+block.type);
+    var blockClass = Neon.getFile('app/block/'+block.type);
     var blockInstance = new blockClass(block);
 
     if(block.blocks && block.blocks.length > 0){
@@ -260,7 +259,7 @@ class Neon_router extends Neon_abstract {
       }, function(){
         blockInstance.setContent('childBlock', blockHtml);
         if(block.model){
-          var modelClass = Neon.getFile('/model/'+block.model);
+          var modelClass = Neon.getFile('app/model/'+block.model);
           var modelInstance = new modelClass();
 
           modelInstance.getData(function(data){
@@ -277,7 +276,7 @@ class Neon_router extends Neon_abstract {
       });
     } else {
       if(block.model){
-        var modelClass = Neon.getFile('/model/'+block.model);
+        var modelClass = Neon.getFile('app/model/'+block.model);
         var modelInstance = new modelClass();
 
         modelInstance.getData(function(data){
@@ -298,13 +297,11 @@ class Neon_router extends Neon_abstract {
   layoutRenderer(preparedLayout){
     var self = this;
     self.loadBlock(preparedLayout, function(){
-      console.log('Page rendered!');
     });
   }
 
   conditional(conditionalType){
-    console.log(conditionalType);
-    var conditionalFunction = Neon.getFile(path.join('conditional',conditionalType), false);
+    var conditionalFunction = Neon.getFile(path.join('app/conditional',conditionalType), false);
     if(conditionalFunction){
       return conditionalFunction();
     } else {

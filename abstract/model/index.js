@@ -4,7 +4,7 @@ var getNamespace = require('continuation-local-storage').getNamespace,
 class Neon_block_abstract {
 
   constructor(){
-    this.schemas = Neon.getModule('Neon_db').schemas;
+    this.schemas = Neon.getModule('Neon_database').schemas;
     this.request = context.get('request');
     this.response = context.get('response');
   }

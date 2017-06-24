@@ -1,6 +1,7 @@
 var path = require('path'),
     async = require('async'),
     fs = require('fs'),
+    ncp = require('ncp'),
     canary = require(path.join(appRoot,'toolkit','canary.js')),
     join = require('path').join;
 
@@ -21,7 +22,14 @@ class Neon {
 
     /* Emit function start event */
     this.canary.emit('neon:init_start');
+
+    /* Load / register all modules found in 'modules' folder */
     this.registerModules();
+
+    /* Deploy all static content */
+    this.staticContentDeploy();
+
+    /* Setup production / development error handlers, start Express server */
     this.appSetup();
 
     /* Emit function end event */
@@ -179,7 +187,6 @@ class Neon {
   }
 
   appSetup(){
-
      // production error handler
      this.app.use(function(err, req, res, next) {
      	res.status(err.status || 500);
@@ -199,10 +206,35 @@ class Neon {
     		});
     	});
     }
-
     var server = this.app.listen(config.port, config.ip, function(){
       var addr = server.address();
       console.log('Server listening at '+addr.address+':'+addr.port);
+    });
+  }
+
+  staticContentDeploy(){
+    var self = this;
+    /* Make sure pub & pub/static folders exist */
+    var pubFolder = path.join(appRoot,'./pub');
+    if (!fs.existsSync(pubFolder)){
+        fs.mkdirSync(pubFolder);
+    }
+
+    var pubStaticFolder = path.join(appRoot,'./pub/static');
+    if (!fs.existsSync(pubStaticFolder)){
+        fs.mkdirSync(pubStaticFolder);
+    }
+
+    /* Find and recreate all registered modules' static content */
+    async.eachSeries(self.modules, function(module, callback){
+      var moduleStaticFolder = path.join(module.path, 'pub/static');
+      if (fs.existsSync(moduleStaticFolder)){
+        console.log(module.name + ' has static content!');
+        ncp(moduleStaticFolder, pubStaticFolder, function(err){
+          console.log(err);
+        });
+      }
+      callback();
     });
   }
 

@@ -33,7 +33,7 @@ class Neon_user extends Neon_abstract {
     });
 
     passport.deserializeUser(function(id, callback) {
-      var schemas = Neon.getModule('Neon_db').schemas;
+      var schemas = Neon.getModule('Neon_database').schemas;
       schemas.user.findById(id).then(function(user){
         if (!user) {
           callback(null, false);

@@ -33,9 +33,14 @@ function urlhelperExtension() {
     if(url.indexOf('{{theme}}') >= 0) {
       //url = url.replace('{{theme}}', path.join('theme',config.theme));
     } else if(url.indexOf('{{skin}}') >= 0) {
-      //url = url.replace('{{skin}}', path.join('theme',config.theme,'frontend','skin'));
+      //url = url.replace('{{skin}}', path.join('/pub','static'));
     } else if(url.indexOf('{{baseUrl}}') >= 0) {
-      //url = url.replace('{{baseUrl}}', path.join('//',config.baseUrl));
+      var index = url.indexOf('{{baseUrl}}');
+      if(url[index + '{{baseUrl}}'.length] == '/'){
+        url = url.replace('{{baseUrl}}', '');
+      } else {
+        url = url.replace('{{baseUrl}}', path.join('/'));
+      }
     }
     return url;
   }

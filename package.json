@@ -2,9 +2,10 @@
   "name": "Neon",
   "version": "0.0.1",
   "main": "index.js",
-  "description": "MVC",
+  "description": "Neon MVC Blog Framework",
   "author": "Anton Lantz <xeinon@gmail.com>",
   "dependencies": {
+    "ncp": "*",
     "nunjucks":"*",
     "path":"*",
     "async":"2.0.0",
@@ -25,6 +26,8 @@
     "passport-local": "*",
     "winston": "*",
     "moment": "*",
+    "gulp": "*",
+    "gulp-sass": "*",
     "continuation-local-storage": "*",
     "json_merger": "*"
   }
