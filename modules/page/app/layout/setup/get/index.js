@@ -1,6 +1,6 @@
 module.exports = [
   {
     "path": "/",
-    "handle": "default"
+    "handle": "page"
   }
 ]

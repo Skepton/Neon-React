@@ -6,8 +6,8 @@ module.exports = {
         "@addChildBlock": {
           "name": "categorizer",
           "type": "html",
-          "template": "admin/content/settings/categorizer.html",
           "model": "admin/settings/categorizer",
+          "template": "admin/main/content/settings/categorizer.html",
           "blocks": []
         }
       }

@@ -1,7 +1,7 @@
 config = {
   port: 3000,
-  ip: "192.168.1.3",
-  baseUrl: "localhost:3000"
+  ip: "0.0.0.0",
+  baseUrl: "0.0.0.0:3000"
 }
 
 module.exports = config;

@@ -3,7 +3,7 @@ var Sequelize = require('sequelize');
 module.exports.name = 'comment';
 module.exports.init = function(sequelize){
 
-  var comment = sequelize.define('comment', {
+  var Comment = sequelize.define('comment', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -22,14 +22,12 @@ module.exports.init = function(sequelize){
     thread: {
       type: Sequelize.STRING
     }
-  }, {
-    classMethods: {
-      associate: function(models){
-        comment.belongsTo(models.user, {as: 'author'});
-        comment.belongsTo(models.post);
-      }
-    }
   });
 
-  return comment;
+  Comment.associate = function(models){
+    Comment.belongsTo(models.user, {as: 'author'});
+    Comment.belongsTo(models.post);
+  }
+
+  return Comment;
 }

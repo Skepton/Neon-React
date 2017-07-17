@@ -6,7 +6,7 @@ module.exports = {
         "@addChildBlock": {
           "name": "login",
           "type": "html",
-          "template": "default/content/login.html",
+          "template": "user/main/content/login.html",
           "blocks": []
         }
       }

@@ -16,7 +16,7 @@ function slugify(str) {
 
 module.exports.name = 'category';
 module.exports.init = function(sequelize){
-  var category = sequelize.define('category', {
+  var Category = sequelize.define('category', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -35,21 +35,6 @@ module.exports.init = function(sequelize){
       unique: true
     }
   }, {
-    classMethods: {
-      associate: function(models){
-        category.hasMany(models.category, {as: 'children', foreignKey: 'parentId'});
-        category.hasOne(models.category, {as: 'parent', foreignKey: 'parentId'});
-        category.hasMany(models.post, {as: 'posts'});
-
-        category.addHook('beforeFind', function(options){
-          if(options.modelInclude){
-            options.include = [{model: models.category, as: 'children'}];
-          }
-          return options;
-        });
-
-      }
-    },
     setterMethods: {
       title: function(title){
         this.setDataValue('slug', slugify(title));
@@ -58,5 +43,19 @@ module.exports.init = function(sequelize){
       }
     }
   });
-  return category;
+
+  Category.associate = function(models){
+    Category.hasMany(models.category, {as: 'children', foreignKey: 'parentId'});
+    Category.hasOne(models.category, {as: 'parent', foreignKey: 'parentId'});
+    Category.hasMany(models.post, {as: 'posts'});
+
+    Category.addHook('beforeFind', function(options){
+      if(options.modelInclude){
+        options.include = [{model: models.category, as: 'children'}];
+      }
+      return options;
+    });
+
+  }
+  return Category;
 }

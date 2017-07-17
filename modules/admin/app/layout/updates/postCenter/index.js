@@ -7,7 +7,7 @@ module.exports = {
           "name": "postCenter",
           "type": "html",
           "model": "admin/postCenter/list",
-          "template": "admin/content/postCenter.html",
+          "template": "admin/main/content/postCenter.html",
           "blocks": []
         }
       }

@@ -1,0 +1,15 @@
+{% if user %}
+  <li>
+    <a href="/user/{{user.slug}}" class="loggedIn">
+      <p class="content">
+        <span class="text">Logged in as: </span>
+        <span class="user">{{ user.displayname }}</span>
+      </p>
+    </a>
+    <form action="/logout" method="post">
+        <button type="submit" value="logout">Log out</button>
+    </form>
+  </li>
+{% else  %}
+  <li><a href="/login">Log in</a></li>
+{% endif %}

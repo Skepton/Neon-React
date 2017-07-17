@@ -1,17 +1,17 @@
 module.exports = [
   {
     "path": "/login",
-    "handle": "default",
+    "handle": "page",
     "handleUpdates": ['login']
   },
   {
     "path": "/register",
-    "handle": "default",
+    "handle": "page",
     "handleUpdates": ['register']
   },
   {
     "path": "/user/:user",
-    "handle": "default",
+    "handle": "page",
     "handleUpdates": ['user']
   }
 ]

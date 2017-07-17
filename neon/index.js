@@ -186,6 +186,28 @@ class Neon {
     return file;
   }
 
+  /*
+  ** Get first file found matching file path
+  */
+  getTemplateFile(templateFilePath){
+    var self = this;
+    var file = false;
+    async.detectSeries(this.modules, function(module, callback){
+      var filePath = path.join(appRoot,'./pub/static',moduleFilePath);
+      try {
+        var stats = fs.lstatSync(filePath);
+        if (stats.isFile()) {
+          callback(filePath);
+        }
+      } catch (err) {
+        callback();
+      }
+    }, function(result){
+      file = result;
+    });
+    return file;
+  }
+
   appSetup(){
      // production error handler
      this.app.use(function(err, req, res, next) {
@@ -214,6 +236,7 @@ class Neon {
 
   staticContentDeploy(){
     var self = this;
+
     /* Make sure pub & pub/static folders exist */
     var pubFolder = path.join(appRoot,'./pub');
     if (!fs.existsSync(pubFolder)){
@@ -225,13 +248,34 @@ class Neon {
         fs.mkdirSync(pubStaticFolder);
     }
 
+    var pubViewFolder = path.join(appRoot,'./pub/view');
+    if (!fs.existsSync(pubViewFolder)){
+        fs.mkdirSync(pubViewFolder);
+    }
+
     /* Find and recreate all registered modules' static content */
     async.eachSeries(self.modules, function(module, callback){
       var moduleStaticFolder = path.join(module.path, 'pub/static');
       if (fs.existsSync(moduleStaticFolder)){
         console.log(module.name + ' has static content!');
         ncp(moduleStaticFolder, pubStaticFolder, function(err){
-          console.log(err);
+          if(err){
+            console.log('Static deploy: Static content error: '+err);
+          }
+        });
+      }
+      callback();
+    });
+
+    /* Find and recreate all registered modules' static content */
+    async.eachSeries(self.modules, function(module, callback){
+      var moduleStaticFolder = path.join(module.path, 'pub/view');
+      if (fs.existsSync(moduleStaticFolder)){
+        console.log(module.name + ' has view content!');
+        ncp(moduleStaticFolder, pubViewFolder, function(err){
+          if(err){
+            console.log('Static deploy: View content error'+err);
+          }
         });
       }
       callback();

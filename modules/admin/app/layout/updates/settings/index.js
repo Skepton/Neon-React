@@ -6,7 +6,7 @@ module.exports = {
         "@addChildBlock": {
           "name": "settings",
           "type": "html",
-          "template": "admin/content/settings.html",
+          "template": "admin/main/content/settings.html",
           "blocks": []
         }
       }

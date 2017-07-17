@@ -4,7 +4,7 @@ var Sequelize = require('sequelize'),
 module.exports.name = 'post';
 module.exports.init = function(sequelize){
 
-  var post = sequelize.define('post', {
+  var Post = sequelize.define('post', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -38,19 +38,6 @@ module.exports.init = function(sequelize){
       unique: true
     }
   }, {
-    classMethods: {
-      associate: function(models){
-
-        post.belongsTo(models.user, {as: 'author', foreignKey: 'userId'});
-        post.belongsTo(models.category, {as: 'category'});
-
-        post.addHook('beforeFind', function(options){
-          options.include = [{model: models.user, as: 'author', attributes: {exclude: ['password','updatedAt']}},{model: models.category, as: 'category'}];
-          return options;
-        });
-
-      }
-    },
     getterMethods: {
       postDate: function(){
         return moment(this.updatedAt).format();
@@ -61,5 +48,15 @@ module.exports.init = function(sequelize){
     }
   });
 
-  return post;
+  Post.associate = function(models){
+    Post.belongsTo(models.user, {as: 'author', foreignKey: 'userId'});
+    Post.belongsTo(models.category, {as: 'category'});
+
+    Post.addHook('beforeFind', function(options){
+      options.include = [{model: models.user, as: 'author', attributes: {exclude: ['password','updatedAt']}},{model: models.category, as: 'category'}];
+      return options;
+    });
+  }
+
+  return Post;
 }
