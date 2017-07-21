@@ -8,7 +8,13 @@ module.exports = {
         "name":"head",
         "type":"html",
         "template": "page/main/head.html",
-        "blocks": []
+        "blocks": [
+          {
+            "name":"headContent",
+            "type": "list",
+            "blocks": []
+          }
+        ]
     },
     {
         "name":"message",

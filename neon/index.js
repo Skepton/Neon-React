@@ -27,7 +27,17 @@ class Neon {
     this.registerModules();
 
     /* Deploy all static content */
-    this.staticContentDeploy();
+    this.moduleContentDeploy();
+
+    /* Load / register all modules found in 'modules' folder */
+    this.registerTheme();
+
+    /* Deploy theme conent */
+    this.themePrepareDeploy(this.theme);
+
+    /* Preload blocks & models for improved performence */
+    this.preloadBlocks();
+    this.preloadModels();
 
     /* Setup production / development error handlers, start Express server */
     this.appSetup();
@@ -97,10 +107,42 @@ class Neon {
   }
 
   /*
+  ** Load theme set in Neon config, fallback to
+  */
+  registerTheme(){
+    var self = this;
+
+    /* Emit function start event */
+    this.canary.emit('neon:register_theme_start');
+
+    /* Read module.js file of installed modules */
+    try {
+      var theme = self.require(path.join(appRoot,'./modules/', config.theme, 'theme.js'));
+      if(theme){
+        self.addTheme(theme);
+      } else {
+        var theme = self.require(path.join(appRoot,'./modules/', 'phosphor', 'theme.js'));
+        self.addTheme(theme);
+      }
+    } catch(err) {}
+
+    /* Emit function end event */
+    this.canary.emit('neon:register_theme_end');
+  }
+
+  /*
   ** Add module, loaded through require
   */
   addModule(module){
     this.initModule(module);
+  }
+
+  /*
+  ** Add theme, loaded through require
+  */
+  addTheme(theme){
+    this.theme = new theme();
+    this.initTheme();
   }
 
   /*
@@ -112,6 +154,13 @@ class Neon {
     } else {
       this.modules.push(new module());
     }
+  }
+
+  /*
+  ** Set theme to app, run init function in theme
+  */
+  initTheme(){
+    this.theme.init();
   }
 
   /*
@@ -130,7 +179,7 @@ class Neon {
   /*
   ** Get all files from active modules matching folder path
   */
-  getAllFiles(folderPath){
+  getAllFiles(folderPath, returnPath = false){
     var self = this;
     var files = [];
     async.eachSeries(this.modules, function(module, callback){
@@ -139,7 +188,11 @@ class Neon {
         fs.readdirSync(filePath).forEach(function(moduleFile) {
           var requiredModuleFile = self.require(path.join(filePath,moduleFile));
           if(requiredModuleFile){
-            files.push(requiredModuleFile);
+            if(returnPath) {
+              files[moduleFile] = requiredModuleFile;
+            } else {
+              files.push(requiredModuleFile);
+            }
           }
         });
       } catch(err) {}
@@ -208,6 +261,79 @@ class Neon {
     return file;
   }
 
+  /*
+  ** Preload block types from active modules
+  */
+  preloadBlocks() {
+    var blocks = this.getAllFiles('app/block', true);
+    this.blocks = blocks;
+  }
+
+  /*
+  ** Return block type from proloaded blocks
+  */
+  getBlockType(blockType){
+    return this.blocks[blockType];
+  }
+
+  readAllFiles(modulePath,folderPath){
+    var self = this;
+    var files = [];
+    var filePath = path.join(modulePath, folderPath);
+    try {
+      fs.readdirSync(filePath).forEach(function(modelPath) {
+        var stats = fs.lstatSync(path.join(filePath,modelPath));
+        if (stats.isFile()) {
+          console.log(folderPath);
+          var requiredModuleFile = self.require(path.join(filePath,modelPath));
+          if(requiredModuleFile){
+            files[folderPath] = requiredModuleFile;
+          }
+        } else {
+          var newFiles = self.readAllFiles(modulePath, path.join(folderPath,modelPath));
+          for(var key in newFiles) {
+              files[key] = newFiles[key];
+          }
+        }
+      });
+    } catch(err) {}
+    //console.log(files);
+    return files;
+  }
+
+  getAllModels(folderPath){
+    var self = this;
+    var files = [];
+    async.eachSeries(this.modules, function(module, callback){
+      var modelPath = path.join(module.getPath(),folderPath);
+      var newFiles = self.readAllFiles(modelPath,'');
+      for(var key in newFiles) {
+          files[key] = newFiles[key];
+      }
+      callback();
+    });
+    return files;
+  }
+
+  /*
+  ** Preload model from active modules
+  */
+  preloadModels() {
+    var models = this.getAllModels('app/model', true);
+    console.log(models);
+    this.models = models;
+  }
+
+  /*
+  ** Return model from proloaded models
+  */
+  getModel(model){
+    return this.models[model];
+  }
+
+  /*
+  ** Setup error handling, start server
+  */
   appSetup(){
      // production error handler
      this.app.use(function(err, req, res, next) {
@@ -234,7 +360,7 @@ class Neon {
     });
   }
 
-  staticContentDeploy(){
+  moduleContentDeploy(){
     var self = this;
 
     /* Make sure pub & pub/static folders exist */
@@ -256,10 +382,10 @@ class Neon {
     /* Find and recreate all registered modules' static content */
     async.eachSeries(self.modules, function(module, callback){
       var moduleStaticFolder = path.join(module.path, 'pub/static');
-      if (fs.existsSync(moduleStaticFolder)){
+      if (fs.existsSync(moduleStaticFolder) && !module.isThemeModule){
         console.log(module.name + ' has static content!');
         ncp(moduleStaticFolder, pubStaticFolder, function(err){
-          if(err){
+          if(err && err.Error != 'EEXIST'){
             console.log('Static deploy: Static content error: '+err);
           }
         });
@@ -267,19 +393,69 @@ class Neon {
       callback();
     });
 
-    /* Find and recreate all registered modules' static content */
+
+    /* Find and recreate all registered modules' view content */
     async.eachSeries(self.modules, function(module, callback){
-      var moduleStaticFolder = path.join(module.path, 'pub/view');
-      if (fs.existsSync(moduleStaticFolder)){
+      var moduleViewFolder = path.join(module.path, 'pub/view');
+      if (fs.existsSync(moduleViewFolder) && !module.isThemeModule){
         console.log(module.name + ' has view content!');
-        ncp(moduleStaticFolder, pubViewFolder, function(err){
-          if(err){
+        ncp(moduleViewFolder, pubViewFolder, function(err){
+          if(err && err[0].code != 'EEXIST'){
             console.log('Static deploy: View content error'+err);
           }
         });
       }
       callback();
     });
+
+  }
+
+  themePrepareDeploy(theme){
+    var self = this;
+    var deployTheme = theme;
+    if(deployTheme.parent){
+      self.themePrepareDeploy(deployTheme.parent);
+    }
+    self.themeContentDeploy(deployTheme);
+  }
+
+  themeContentDeploy(theme){
+
+    /* Make sure pub & pub/static folders exist */
+    var pubFolder = path.join(appRoot,'./pub');
+    if (!fs.existsSync(pubFolder)){
+        fs.mkdirSync(pubFolder);
+    }
+
+    var pubStaticFolder = path.join(appRoot,'./pub/static');
+    if (!fs.existsSync(pubStaticFolder)){
+        fs.mkdirSync(pubStaticFolder);
+    }
+
+    var pubViewFolder = path.join(appRoot,'./pub/view');
+    if (!fs.existsSync(pubViewFolder)){
+        fs.mkdirSync(pubViewFolder);
+    }
+
+    var themeStaticFolder = path.join(theme.path, 'pub/static');
+    if (fs.existsSync(themeStaticFolder)){
+      console.log(theme.name + ' has static content!');
+      ncp(themeStaticFolder, pubStaticFolder, {'clobber': true}, function(err){
+        if(err && err[0].code != 'EEXIST'){
+          console.log('Theme content deploy: Theme static content error: '+err);
+        }
+      });
+    }
+
+    var themeViewFolder = path.join(theme.path, 'pub/view');
+    if (fs.existsSync(themeViewFolder)){
+      console.log(theme.name + ' has view content!');
+      ncp(themeViewFolder, pubViewFolder, {'clobber': true}, function(err){
+        if(err && err[0].code != 'EEXIST'){
+          console.log('Theme content deploy: Theme view content error'+err);
+        }
+      });
+    }
   }
 
 }

@@ -33,7 +33,7 @@ class Neon_router extends Neon_abstract {
   /*
   ** Router Setup
   */
-  routerSetup(parentPath, parentConditional){
+  routerSetup(){
     var self = this;
     var layoutSetups = Neon.getFolders('app/layout/setup/');
 
@@ -42,15 +42,17 @@ class Neon_router extends Neon_abstract {
         var routes = Neon.require(routePath);
         async.eachSeries(routes, function(route, callbackRoutes){
           var type = method;
-          var fullPath = parentPath ? path.join(parentPath, route.path) : route.path;
+          var fullPath = route.path;
 
           // Used for carrying conditional checked from parent to child routes
-          var carriedConditional = parentConditional ? parentConditional : (route.conditional || false);
+          var conditional = route.conditional || false;
 
           switch (type) {
             case 'get':
 
+              var preparedLayout = self.prepareLayout(route);
               Neon.app.get(fullPath, function(req,res){
+                console.time('request');
 
                 /*
                 ** Request context created, setting request and response object
@@ -60,8 +62,7 @@ class Neon_router extends Neon_abstract {
                   context.set('request', req);
                   context.set('response', res);
 
-                  if(!carriedConditional || (carriedConditional && self.conditional(carriedConditional))){
-                    var preparedLayout = self.prepareLayout(route);
+                  if(!conditional || (conditional && self.conditional(conditional))){
                     self.layoutRenderer(preparedLayout);
                   } else {
                     res.redirect('/');
@@ -82,7 +83,7 @@ class Neon_router extends Neon_abstract {
                   context.set('request', req);
                   context.set('response', res);
 
-                  if(!carriedConditional || (carriedConditional && self.conditional(carriedConditional))){
+                  if(!conditional || (conditional && self.conditional(conditional))){
                     self.handlePost(route);
                   } else {
                     res.redirect('/');
@@ -91,12 +92,6 @@ class Neon_router extends Neon_abstract {
 
               });
               break;
-          }
-
-          if(route.childRoutes){
-            route.childRoutes.forEach(function(route){
-              // setupRoute(route, fullPath, carriedConditional);
-            });
           }
           callbackRoutes();
         });
@@ -246,8 +241,11 @@ class Neon_router extends Neon_abstract {
 
   loadBlock(block, callback){
     var self = this;
-    var blockClass = Neon.getFile('app/block/'+block.type);
+    console.time('loadBlock');
+    console.log('Block type: '+block.type);
+    var blockClass = Neon.getBlockType(block.type);
     var blockInstance = new blockClass(block);
+    console.timeEnd('loadBlock');
 
     if(block.blocks && block.blocks.length > 0){
       var blockHtml = {};
@@ -259,7 +257,7 @@ class Neon_router extends Neon_abstract {
       }, function(){
         blockInstance.setContent('childBlock', blockHtml);
         if(block.model){
-          var modelClass = Neon.getFile('app/model/'+block.model);
+          var modelClass = Neon.getModel(block.model);
           var modelInstance = new modelClass();
 
           modelInstance.getData(function(data){
@@ -276,7 +274,7 @@ class Neon_router extends Neon_abstract {
       });
     } else {
       if(block.model){
-        var modelClass = Neon.getFile('app/model/'+block.model);
+        var modelClass = Neon.getModel(block.model);
         var modelInstance = new modelClass();
 
         modelInstance.getData(function(data){
@@ -296,12 +294,15 @@ class Neon_router extends Neon_abstract {
 
   layoutRenderer(preparedLayout){
     var self = this;
+    console.time('render');
     self.loadBlock(preparedLayout, function(){
+      console.timeEnd('render');
+      console.timeEnd('request');
     });
   }
 
   conditional(conditionalType){
-    var conditionalFunction = Neon.getFile(path.join('app/conditional',conditionalType), false);
+    var conditionalFunction = Neon.getFile(path.join('app/helper/conditional',conditionalType), false);
     if(conditionalFunction){
       return conditionalFunction();
     } else {

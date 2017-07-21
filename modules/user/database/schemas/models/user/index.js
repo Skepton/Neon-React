@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize'),
     path = require('path'),
     async = require('async'),
-    hashPassword = Neon.getFile('app/handlePassword').hashPassword;
+    hashPassword = Neon.getFile('app/helper/handlePassword').hashPassword;
 
 function slugify(str) {
   var from  = "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź",
@@ -79,6 +79,6 @@ module.exports.init = function(sequelize){
       });
     });
   }
-  
+
   return User;
 }

@@ -32,8 +32,8 @@ function urlhelperExtension() {
   this.run = function(context, url, body) {
     if(url.indexOf('{{theme}}') >= 0) {
       //url = url.replace('{{theme}}', path.join('theme',config.theme));
-    } else if(url.indexOf('{{skin}}') >= 0) {
-      //url = url.replace('{{skin}}', path.join('/pub','static'));
+    } else if(url.indexOf('{{static}}') >= 0) {
+      url = url.replace('{{static}}', '/static');
     } else if(url.indexOf('{{baseUrl}}') >= 0) {
       var index = url.indexOf('{{baseUrl}}');
       if(url[index + '{{baseUrl}}'.length] == '/'){

@@ -8,7 +8,7 @@ class Neon_model_post_list extends Neon_model_abstract {
 
   getData(callback){
     var self = this;
-    this.schemas.post.findAll({ limit: 10, order: '"createdAt" DESC'}).then(function(posts){
+    this.schemas.post.findAll({ limit: 10, order: [['createdAt', 'DESC']]}).then(function(posts){
       callback(posts);
     });
   }

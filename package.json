@@ -28,6 +28,7 @@
     "moment": "*",
     "gulp": "*",
     "gulp-sass": "*",
+    "gulp-concat":"*",
     "continuation-local-storage": "*",
     "json_merger": "*"
   }

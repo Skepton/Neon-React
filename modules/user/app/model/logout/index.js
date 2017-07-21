@@ -2,7 +2,7 @@ var path = require('path'),
     Neon_model_abstract = require(path.join(appRoot,'abstract/model')),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    compareHash = Neon.getFile('app/handlePassword').compareHash;
+    compareHash = Neon.getFile('app/helper/handlePassword').compareHash;
 
 class login extends Neon_model_abstract {
 

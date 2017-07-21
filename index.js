@@ -23,7 +23,7 @@ var  app = express();
 app.set('view engine', 'html');
 app.set('view cache', false);
 
-app.use(express.static(path.join(__dirname, 'pub','static')))
+app.use(express.static(path.join(__dirname, config.pubPath)))
    //.use(favicon())
    .use(bodyParser.urlencoded({extended: false}))
    .use(bodyParser.json())
