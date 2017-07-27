@@ -1,9 +1,6 @@
-<header id="header" class="header">
-  <div class="contentWidth">
-    <a class="header-logo" href="{% urlhelper "{{baseUrl}}/admin" %}{% endurlhelper %}"><img src="{% urlhelper "{{static}}/images/logo.png" %}{% endurlhelper %}" /></a>
-    <ul class="header-links">
+<header id="header">
+    <a class="header-logo" href="{% urlhelper "{{baseUrl}}/admin" %}{% endurlhelper %}"><span class="logo-text"><span class="capital">N</span><span class="subhead">eon</span></span></a>
+    <nav  id="nav">
       {{childBlock.headerLinks}}
-    </ul>
-  </div>
+    </nav>
 </header>
-<a href="/admin/settings">Settings</a>

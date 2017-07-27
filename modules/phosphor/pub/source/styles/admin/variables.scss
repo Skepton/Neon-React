@@ -1,0 +1,22 @@
+
+// General
+$general--background-color: #ffffff !default;
+$general--font-size: 14px !default;
+$general--font-family: "Source Sans Pro", sans-serif !default;
+
+$grid--max-width: 1400px !default;
+
+// Colors
+// -- Informative
+$color__info--notice: #f5eba2;
+$color__info--error: #d63278;
+
+// -- Actions
+$color__action--confirm: #19ab66;
+$color__action--cancel: #d63278;
+$color__action--neutral: #2da6de;
+
+@import '../mixins/reset',
+        '../mixins/button',
+        '../mixins/grid',
+        '../mixins/mdl-icons';

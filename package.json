@@ -14,6 +14,7 @@
     "bcryptjs": "*",
     "express": "4.14.0",
     "express-session": "*",
+    "path-to-regexp":"*",
     "pg":"*",
     "sequelize": "*",
     "serve-favicon": "*",
@@ -27,8 +28,11 @@
     "winston": "*",
     "moment": "*",
     "gulp": "*",
+    "gulp-exec": "*",
     "gulp-sass": "*",
     "gulp-concat":"*",
+    "gulp-autoprefixer":"*",
+    "merge-stream": "*",
     "continuation-local-storage": "*",
     "json_merger": "*"
   }

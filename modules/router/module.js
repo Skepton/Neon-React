@@ -61,6 +61,7 @@ class Neon_router extends Neon_abstract {
                 context.run(function(){
                   context.set('request', req);
                   context.set('response', res);
+                  context.set('route', fullPath);
 
                   if(!conditional || (conditional && self.conditional(conditional))){
                     self.layoutRenderer(preparedLayout);
@@ -241,11 +242,9 @@ class Neon_router extends Neon_abstract {
 
   loadBlock(block, callback){
     var self = this;
-    console.time('loadBlock');
-    console.log('Block type: '+block.type);
+
     var blockClass = Neon.getBlockType(block.type);
     var blockInstance = new blockClass(block);
-    console.timeEnd('loadBlock');
 
     if(block.blocks && block.blocks.length > 0){
       var blockHtml = {};

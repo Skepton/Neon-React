@@ -1,30 +1,10 @@
-<!--{{model|dump}}-->
-<form action="/admin/new/post" method="post">
-    <button type="submit" value="newPost">New Post</button>
-</form>
-{% for article in model %}
-
-  {# Print Headline of Article #}
-  {% if article.body %}
-      <h2 class="headline truncate"><a href="admin/composer/{{article.hashid}}">{{article.headline}}</a></h2>
-  {% else %}
-      <h2 class="headline truncate"><a href="admin/composer/{{article.hashid}}">Untitled</a></h2>
-  {% endif %}
-
-  {# Print Headline of Article #}
-  {% if article.headline %}
-      <p class="body truncate">{{article.body|truncate(64, True)}}</p>
-  {% else %}
-      <p class="body truncate">This could be the start of the article</p>
-  {% endif %}
-
-  <div class="post-info">
-    <span class="author">{{article.author.displayname}}</span>
-    <span class="date">{{article.postDate}}</span>
+<div class="post-center">
+  <div class="post-center__bar">
+    <form action="/admin/new/post" method="post" class="new-post">
+        <button type="submit" value="newPost">New Post</button>
+    </form>
   </div>
-
-{% else %}
-
-  <p>No articles written yet!</p>
-
-{% endfor %}
+  <div class="post-center__posts">
+    {{childBlock.posts}}
+  </div>
+</div>

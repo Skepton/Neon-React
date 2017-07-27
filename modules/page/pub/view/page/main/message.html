@@ -1,16 +1,12 @@
-<section class="messages">
+<section class="messages content-width">
   {% if errorMessage %}
-    <div class="error">
-      <div class="contentWidth">
-        {{ errorMessage }}
-      </div>
+    <div class="messages__error">
+      {{ errorMessage }}
     </div>
   {% endif %}
   {% if noticeMessage %}
-    <div class="notice">
-      <div class="contentWidth">
-        {{ noticeMessage }}
-      </div>
+    <div class="messages__notice">
+      {{ noticeMessage }}
     </div>
   {% endif %}
 </section>

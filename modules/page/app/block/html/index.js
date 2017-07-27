@@ -30,7 +30,6 @@ class Neon_page_html extends Neon_block_abstract {
         callback(html);
       }
     });
-
   }
 
 }

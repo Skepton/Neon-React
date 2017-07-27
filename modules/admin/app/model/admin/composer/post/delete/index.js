@@ -1,17 +1,29 @@
 var path = require('path'),
-    fallback = require(path.join(appRoot,'/lib/module/fallback')),
-    abstract = fallback('@model/abstract');
+    Neon_model_abstract = require(path.join(appRoot,'abstract/model'));
 
-class composerDelete extends abstract {
-  constructor(db, request){
-    super(db, request);
+class Neon_model_composer_delete extends Neon_model_abstract {
+  constructor(){
+    super();
+    this.init();
+  }
+
+  init(){
+    var self = this;
+
+    self.deletePost(function(err){
+      if(!err) {
+        self.successAction();
+      } else {
+        self.failureAction(err);
+      }
+    });
   }
 
   deletePost(callback){
     var self = this;
     var hashid = self.request.params.hashid;
     var postBody = self.request.body;
-    self.models.post.destroy({where: {hashid: hashid}}).then(function(post){
+    self.schemas.post.destroy({where: {hashid: hashid}}).then(function(post){
       if(post > 0){
         callback(false);
       } else {
@@ -19,20 +31,15 @@ class composerDelete extends abstract {
       }
     });
   }
-  successAction(request, response){
-    request.flash('notice', 'Post deleted successful!');
-    response.redirect('/admin');
+  successAction(){
+    this.request.flash('notice', 'Post deleted successful!');
+    this.response.redirect('/admin');
   }
 
-  failureAction(request, response, error){
-    request.flash('error', 'Error deleting post!');
-    response.redirect('/admin');
+  failureAction(){
+    this.request.flash('error', 'Error deleting post!');
+    this.response.redirect('/admin');
   }
 }
 
-module.exports = function(request, callback){
-  var composerDeleteInstance = new composerDelete(db, request);
-  composerDeleteInstance.deletePost(function(data){
-    callback(composerDeleteInstance, data);
-  });
-}
+module.exports = Neon_model_composer_delete;

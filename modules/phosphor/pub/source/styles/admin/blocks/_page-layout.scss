@@ -1,0 +1,22 @@
+$navigation__header--width: 175px !default;
+
+#neon.admin {
+  display: flex;
+  flex-direction: row;
+  #header {
+    width: $navigation__header--width;
+    height: 100vh;
+    max-height: 100vh;
+  }
+  .main-content {
+    width: calc(100vw - #{$navigation__header--width});
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    @include ngsRow();
+    > .content-width {
+      @include ngsColumn();
+      flex-grow: 1;
+    }
+  }
+}

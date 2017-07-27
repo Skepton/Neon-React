@@ -1,0 +1,40 @@
+/*
+** Neon Grid System - NGS
+*/
+
+$ngsRow--flex-direction: row !default;
+$ngsRow--flex-wrap: wrap !default;
+$ngsRow--flex-grow: 0 !default;
+$ngsRow--flex-shrink: 0 !default;
+$ngsRow--justify-content: flex-start !default;
+$ngsRow--align-items: flex-start !default;
+$ngsRow--padding: 0 !default;
+
+$ngsColumn--padding: 1rem !default;
+
+@mixin ngsRow (
+  $flex-direction: $ngsRow--flex-direction,
+  $flex-wrap: $ngsRow--flex-wrap,
+  $flex-grow: $ngsRow--flex-grow,
+  $flex-shrink: $ngsRow--flex-shrink,
+  $justify-content: $ngsRow--justify-content,
+  $align-items: $ngsRow--align-items,
+  $padding: $ngsRow--padding,
+  $max-width: $grid--max-width
+){
+  display: flex;
+  flex-direction: $flex-direction;
+  flex-wrap: $flex-wrap;
+  flex-grow: $flex-grow;
+  flex-shrink: $flex-shrink;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  padding: $padding;
+  max-width: $max-width;
+}
+
+@mixin ngsColumn (
+  $padding: $ngsColumn--padding
+){
+  padding: $padding;
+}

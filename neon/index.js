@@ -5,6 +5,8 @@ var path = require('path'),
     canary = require(path.join(appRoot,'toolkit','canary.js')),
     join = require('path').join;
 
+var exec = require('child_process').exec;
+
 class Neon {
 
   constructor(app){
@@ -34,6 +36,8 @@ class Neon {
 
     /* Deploy theme conent */
     this.themePrepareDeploy(this.theme);
+
+    this.runGulpCompiler();
 
     /* Preload blocks & models for improved performence */
     this.preloadBlocks();
@@ -284,7 +288,6 @@ class Neon {
       fs.readdirSync(filePath).forEach(function(modelPath) {
         var stats = fs.lstatSync(path.join(filePath,modelPath));
         if (stats.isFile()) {
-          console.log(folderPath);
           var requiredModuleFile = self.require(path.join(filePath,modelPath));
           if(requiredModuleFile){
             files[folderPath] = requiredModuleFile;
@@ -320,7 +323,6 @@ class Neon {
   */
   preloadModels() {
     var models = this.getAllModels('app/model', true);
-    console.log(models);
     this.models = models;
   }
 
@@ -456,6 +458,19 @@ class Neon {
         }
       });
     }
+  }
+
+  runGulpCompiler(){
+    exec('gulp scss', function(err, stdout, stderr){
+      if (err) {
+        // node couldn't execute the command
+        return;
+      }
+
+      // the *entire* stdout and stderr (buffered)
+      console.log(`${stdout}`);
+      console.log(`${stderr}`);
+    });
   }
 
 }

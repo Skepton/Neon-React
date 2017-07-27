@@ -1,0 +1,15 @@
+@include meyer-reset();
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+.button,
+button {
+  @include button--setup();
+}
+
+#neon.admin {
+  font-size: $general--font-size;
+  background-color: $general--background-color;
+  font-family: $general--font-family;
+}

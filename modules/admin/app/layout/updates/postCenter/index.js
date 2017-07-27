@@ -6,9 +6,16 @@ module.exports = {
         "@addChildBlock": {
           "name": "postCenter",
           "type": "html",
-          "model": "admin/postCenter/list",
           "template": "admin/main/content/postCenter.html",
-          "blocks": []
+          "blocks": [
+            {
+              "name": "posts",
+              "type": "html",
+              "model": "admin/postCenter/list",
+              "template": "admin/main/content/postCenter/posts.html",
+              "blocks": []
+            }
+          ]
         }
       }
     ]

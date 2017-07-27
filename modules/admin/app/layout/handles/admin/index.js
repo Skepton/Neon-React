@@ -8,12 +8,18 @@ module.exports = {
         "name":"head",
         "type":"html",
         "template": "admin/main/head.html",
-        "blocks": []
+        "blocks": [
+          {
+            "name":"headContent",
+            "type": "list",
+            "blocks": []
+          }
+        ]
     },
     {
         "name":"message",
         "type":"flash",
-        "template": "admin/main/message.html",
+        "template": "page/main/message.html",
         "blocks": []
     },
     {
@@ -24,7 +30,26 @@ module.exports = {
         {
           "name": "headerLinks",
           "type": "list",
-          "blocks": []
+          "blocks": [
+            {
+              "name": "adminHeaderLinks",
+              "type": "adminLinks",
+              "template": "admin/main/header/headerLinks.html",
+              "links": [
+                {
+                  "link": "/admin",
+                  "class": "dashboard",
+                  "title": "Dashboard"
+                },
+                {
+                  "link": "/admin/settings",
+                  "class": "settings",
+                  "title": "Settings"
+                }
+              ],
+              "blocks": []
+            }
+          ]
         }
       ]
     },

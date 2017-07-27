@@ -3,12 +3,11 @@
   <head>
     {{ childBlock.head }}
   </head>
-  <body>
-    {{ childBlock.message }}
+  <body id="neon" class="admin">
     {{ childBlock.header }}
-    <main>
-      <div class="contentWidth">
-        <h1>Hello World</h1>
+    <main class="main-content">
+      <div class="content-width">
+        {{ childBlock.message }}
         {{ childBlock.content }}
       </div>
     </main>
