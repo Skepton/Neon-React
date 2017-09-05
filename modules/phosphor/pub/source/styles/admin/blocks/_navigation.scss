@@ -1,4 +1,4 @@
-$navigation--background-color: #e0e0e0 !default;
+$navigation--background-color: #ffffff !default;
 $navigation__logo--background-color: #292a51 !default;
 
 #neon.admin {
@@ -16,7 +16,7 @@ $navigation__logo--background-color: #292a51 !default;
       height: 4rem;
       padding: calc(50% + 4px) 0;
       margin: 0 0 3rem;
-      font-family: "Jura", sans-serif;
+      font-family: $general__neon--font-family;
       background-color: $navigation__logo--background-color;
       span {
         color: white;
@@ -42,17 +42,23 @@ $navigation__logo--background-color: #292a51 !default;
       }
     }
     #nav {
-      display: flex;
-      flex-direction: column;
-      a {
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        font-weight: 400;
-        color: #333;
-        &.active {
+      .navigation-list {
+        display: flex;
+        flex-direction: column;
+        &__item {
+          font-size: 1rem;
+          font-weight: 400;
           color: #333;
-          font-weight: 600;
-          background-color: rgba(0,0,0,0.15);
+          a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: inherit;
+          }
+          &--active > a {
+            color: #333;
+            font-weight: 600;
+            background-color: #f5f5f5;
+          }
         }
       }
     }

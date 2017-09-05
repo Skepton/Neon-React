@@ -9,22 +9,22 @@ class Neon_model_categorizer extends Neon_model_abstract {
 
   outputCategoryTree(categories, callback){
     var self = this;
-    var categoryArray = [];
+    var categoryTree = [];
+
     async.eachSeries(categories, function(category, asyncCallback){
       category.getChildren().then(function(children){
         if(children.length > 0){
           self.outputCategoryTree(children, function(childrenCategories){
-            categoryArray.push(category);
-            categoryArray.push.apply(categoryArray, childrenCategories);
+            categoryTree.push({"id": category.id, "title": category.title, "children": childrenCategories});
             asyncCallback();
           });
         } else {
-          categoryArray.push(category);
+          categoryTree.push({"id": category.id, "title": category.title, "children": []});
           asyncCallback();
         }
       });
     }, function(){
-      callback(categoryArray);
+      callback(categoryTree);
     });
   }
 

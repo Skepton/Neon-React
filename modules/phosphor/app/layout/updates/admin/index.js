@@ -6,6 +6,7 @@ module.exports = {
         "@addChildBlock": {
           "name": "phosporHeadContent",
           "type": "html",
+          "nowrap": true,
           "template": "admin/main/head/headContent.html",
           "blocks": []
         }

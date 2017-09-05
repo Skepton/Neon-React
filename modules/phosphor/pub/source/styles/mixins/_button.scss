@@ -1,4 +1,5 @@
 $button--background-color: #292a51;
+$button--border-radius: 2px;
 
 @mixin button--setup(){
   display: block;
@@ -8,4 +9,5 @@ $button--background-color: #292a51;
   letter-spacing: 1px;
   color: white;
   background-color: $button--background-color;
+  border-radius: $button--border-radius;
 }

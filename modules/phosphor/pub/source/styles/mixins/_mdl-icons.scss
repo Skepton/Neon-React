@@ -1,9 +1,15 @@
-@mixin mdl-icon($icon: '', $position: 'before'){
+@mixin mdl-icon($icon: '', $position: 'before', $font-size: 24px, $vertical-align: bottom){
   &:#{$position} {
+    @if $position == 'before' {
+      margin-right: 0.25rem;
+    } @else {
+      margin-left: 0.25rem;
+    }
+    content: $icon;
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: $font-size;
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
@@ -13,7 +19,6 @@
     direction: ltr;
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
-    vertical-align: bottom;
-    content: $icon;
+    vertical-align: $vertical-align;
   }
 }

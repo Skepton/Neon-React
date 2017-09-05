@@ -9,14 +9,27 @@ $navigation__header--width: 175px !default;
     max-height: 100vh;
   }
   .main-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     width: calc(100vw - #{$navigation__header--width});
     height: 100vh;
+    padding: 0 2rem;
     max-height: 100vh;
-    overflow-y: auto;
-    @include ngsRow();
-    > .content-width {
-      @include ngsColumn();
+    transform: translate3d(0,0,0);
+    #messages {
+      flex-grow: 0;
+    }
+    #content {
+      display: flex;
+      flex-wrap: wrap;
       flex-grow: 1;
+      > section {
+        flex-grow: 1;
+      }
     }
   }
+}
+.content-width {
+  max-width: $grid--max-width;
 }

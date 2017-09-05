@@ -1,0 +1,20 @@
+@mixin info-bar(){
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 0 1rem 0;
+  background-color: #ffffff;
+  .button,
+  button {
+    margin-left: 0.75rem;
+  }
+
+  .info {
+    margin-left: 1rem;
+    margin-right: auto;
+  }
+}
+
+.info-bar {
+  @include info-bar();
+}

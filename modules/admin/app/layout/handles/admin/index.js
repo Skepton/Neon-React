@@ -7,11 +7,13 @@ module.exports = {
     {
         "name":"head",
         "type":"html",
+        "nowrap": true,
         "template": "admin/main/head.html",
         "blocks": [
           {
             "name":"headContent",
             "type": "list",
+            "nowrap": true,
             "blocks": []
           }
         ]
@@ -44,7 +46,14 @@ module.exports = {
                 {
                   "link": "/admin/settings",
                   "class": "settings",
-                  "title": "Settings"
+                  "title": "Settings",
+                  "links": [
+                    {
+                      "link": "/admin/settings/categorizer",
+                      "class": "categorizer",
+                      "title": "Categories"
+                    }
+                  ]
                 }
               ],
               "blocks": []

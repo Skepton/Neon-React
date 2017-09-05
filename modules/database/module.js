@@ -82,7 +82,7 @@ class Neon_database extends Neon_abstract_module {
         });
       });
     }).catch(function (err) {
-      //console.log(err);
+      console.log(err);
       //console.log('Unable to connect to the database:', err);
     });
   }

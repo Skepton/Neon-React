@@ -240,6 +240,14 @@ class Neon_router extends Neon_abstract {
     return base;
   }
 
+  wrapBlock(html,block){
+    if(block.nowrap) {
+      return html;
+    } else {
+      return `<section id="${block.name}" class="type-${block.type}">${html}</section>`;
+    }
+  }
+
   loadBlock(block, callback){
     var self = this;
 
@@ -250,7 +258,7 @@ class Neon_router extends Neon_abstract {
       var blockHtml = {};
       async.eachSeries(block.blocks, function(block, blockCallback){
         self.loadBlock(block, function(html){
-          blockHtml[block.name] = html;
+          blockHtml[block.name] = self.wrapBlock(html, block);
           blockCallback();
         });
       }, function(){

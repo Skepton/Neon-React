@@ -28,13 +28,21 @@ module.exports.init = function(sequelize){
     },
     title: {
       type: Sequelize.STRING(64),
-      unique: true
+      unique: false
     },
     slug: {
-      type: Sequelize.STRING(64),
-      unique: true
+      type: Sequelize.STRING(64)
+    },
+    isRoot: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
-  }, {
+  },
+  {
+    indexes: [
+      { unique: true, fields: [ 'slug', 'parentId'], where: {parentId: {$ne: null}} },
+      { unique: true, fields: [ 'slug', 'isRoot'], where: {parentId: {$eq: null}} }
+    ],
     setterMethods: {
       title: function(title){
         this.setDataValue('slug', slugify(title));
@@ -45,8 +53,8 @@ module.exports.init = function(sequelize){
   });
 
   Category.associate = function(models){
-    Category.hasMany(models.category, {as: 'children', foreignKey: 'parentId'});
-    Category.hasOne(models.category, {as: 'parent', foreignKey: 'parentId'});
+    Category.hasMany(models.category, {as: 'children', foreignKey: {name: 'parentId'}});
+    Category.hasOne(models.category, {as: 'parent', foreignKey: {name: 'parentId'}});
     Category.hasMany(models.post, {as: 'posts'});
 
     Category.addHook('beforeFind', function(options){

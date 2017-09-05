@@ -1,0 +1,55 @@
+section#composer {
+  width: 100%;
+}
+.composer-editor {
+  padding-top: 5rem;
+  max-height: 100%;
+  overflow-y: auto;
+  & &__form {
+    width: 50%;
+    padding: 1.5rem;
+    background-color: white;
+    .input-box {
+      &.title {
+        margin: -1.5rem -1.5rem 0;
+        padding: 1.5rem;
+        background-color: #f5f5f5;
+        input {
+          font-size: 2.25rem;
+          font-weight: bold;
+          border-bottom: none;
+          &::placeholder {
+            font-size: inherit;
+            line-height: inherit;
+            font-weight: inherit;
+          }
+        }
+      }
+      &.content {
+        min-height: 400px;
+      }
+    }
+  }
+  & &__bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    background-color: white;
+    #composer-form-submit {
+      padding: 0.75rem 1.5rem;
+      margin-left: 1rem;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      background-color: $color__action--confirm;
+    }
+    #delete-form-submit {
+      padding: 0.5rem 1.25rem;
+      background-color: $color__action--cancel;
+    }
+  }
+}

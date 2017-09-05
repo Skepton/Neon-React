@@ -25,6 +25,7 @@ app.set('view cache', false);
 
 app.use(express.static(path.join(__dirname, config.pubPath)))
    //.use(favicon())
+   .use('/neon',express.static(path.join(__dirname, 'neon/frontend')))
    .use(bodyParser.urlencoded({extended: false}))
    .use(bodyParser.json())
    .use(cookieParser())

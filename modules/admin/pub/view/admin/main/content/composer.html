@@ -1,28 +1,43 @@
 <!--{{model|dump}}-->
-<div id="editor" class="composer">
-  <form action="/admin/composer/save/{{model.post.hashid}}" method="POST">
+<div id="editor" class="composer-editor" neon-composer-editor>
+  <form id="composer-form" class="composer-editor__form" action="/admin/composer/save/{{model.post.hashid}}" method="POST">
 
     <input id="header" type="hidden" name="header" value="{{model.post.header}}" />
 
-    <input id="headline" type="text" name="headline" value="{{model.post.headline}}" placeholder="Headline" required />
+    <div class="input-box title">
+      <div class="input-box__container">
+        <label for="header">Title</label>
+        <input id="headline" type="text" name="headline" value="{{model.post.headline}}" placeholder="What is it about?" required />
+      </div>
+    </div>
 
-    <textarea id="body" name="body" class="materialize-textarea" placeholder="Post body" required>{{model.post.body}}</textarea>
+    <div class="input-box content">
+      <div class="input-box__container">
+        <label for="header">Content</label>
+        <textarea id="body" name="body" class="materialize-textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pellentesque mauris id maximus bibendum. Nulla euismod diam nec commodo lobortis." required>{{model.post.body}}</textarea>
+      </div>
+    </div>
 
-    <input id="source" type="text" name="source" value="{{model.post.source}}" placeholder="Source" />
+    <div class="input-box misc">
+      <div class="input-box__container input-box__container--half">
+        <label for="header">Source</label>
+        <input id="source" type="text" name="source" value="{{model.post.source}}" placeholder="Story credits goes to" />
+      </div>
 
-    <input id="tags" type="text" name="tags" value="{{model.post.tags}}" placeholder="Tags" />
+      <div class="input-box__container input-box__container--half">
+        <label for="header">Tags</label>
+        <input id="tags" type="text" name="tags" value="{{model.post.tags}}" placeholder="Tags" />
+      </div>
+    </div>
 
-    <input type="submit" value="save"/>
-
-
-    <select name="category">
-      <option value="">No Category</option>
-      {% for category in model.categoryTree %}
-        <option value="{{category.id}}"{% if category.id == model.post.categoryId %}selected{% endif %}>{{category.title}}</option>
-      {% else %}
-
-      {% endfor %}
-    </select>
+    <div class="input-box category">
+      <select name="category">
+        <option value="">No Category</option>
+        {% for category in model.categoryTree %}
+          <option value="{{category.id}}"{% if category.id == model.post.categoryId %}selected{% endif %}>{{category.title}}</option>
+        {% endfor %}
+      </select>
+    </div>
 
     {% if model.categoryTree.length <= 0 %}
       <p>No categories - please add a category using the <a href="/admin/settings/categorizer">Categorizer</a></p>
@@ -30,8 +45,18 @@
 
   </form>
 
-  <form action="/admin/composer/delete/{{model.post.hashid}}" method="POST">
-    <input type="submit" value="delete"/>
-  </form>
+  <div class="composer-editor__bar">
+    <form id="delete-form" action="/admin/composer/delete/{{model.post.hashid}}" method="POST">
+      <input id="delete-form-submit" type="submit" value="delete"/>
+    </form>
+    <input id="composer-form-submit" type="submit" value="save" />
+  </div>
 
 </div>
+
+<script>
+  var categorizer = new neonComponentHandler('neon-composer-editor');
+  categorizer.when('click', '#composer-form-submit', (event, element) => {
+    categorizer.findOne('#composer-form').submit();
+  });
+</script>

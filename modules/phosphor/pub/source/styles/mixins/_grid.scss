@@ -8,7 +8,7 @@ $ngsRow--flex-grow: 0 !default;
 $ngsRow--flex-shrink: 0 !default;
 $ngsRow--justify-content: flex-start !default;
 $ngsRow--align-items: flex-start !default;
-$ngsRow--padding: 0 !default;
+$ngsRow--padding: 1rem !default;
 
 $ngsColumn--padding: 1rem !default;
 
@@ -19,8 +19,7 @@ $ngsColumn--padding: 1rem !default;
   $flex-shrink: $ngsRow--flex-shrink,
   $justify-content: $ngsRow--justify-content,
   $align-items: $ngsRow--align-items,
-  $padding: $ngsRow--padding,
-  $max-width: $grid--max-width
+  $padding: $ngsRow--padding
 ){
   display: flex;
   flex-direction: $flex-direction;
@@ -30,7 +29,6 @@ $ngsColumn--padding: 1rem !default;
   justify-content: $justify-content;
   align-items: $align-items;
   padding: $padding;
-  max-width: $max-width;
 }
 
 @mixin ngsColumn (

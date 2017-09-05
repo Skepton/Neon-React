@@ -1,0 +1,7 @@
+.post-center {
+  & &__bar {
+    @include info-bar();
+  }
+  & &__content {
+  }
+}

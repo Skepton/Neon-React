@@ -22,20 +22,29 @@ class Neon_model_categorizer_add extends Neon_model_abstract {
   save(callback){
     var self = this;
     var parentCategory = self.request.params.parentCategory === 'root' ? null : self.request.params.parentCategory;
-    self.schemas.category.create(self.modelData).then(function(category){
-      if(category){
-        if(parentCategory){
-          self.schemas.category.findOne({where: {id: parentCategory}}).then(function(parent){
-            parent.addChildren(category);
+    if(parentCategory){
+      self.schemas.category.findOne({where: {id: parentCategory}}).then(function(parent){
+        if(parent){
+          self.modelData.parentId = parent.id;
+          self.schemas.category.create(self.modelData).then(function(category){
             callback(category, undefined);
+          }).catch(function(err){
+            callback(undefined, err);
           });
         } else {
-          callback(category, undefined);
+          callback(undefined, 'Parent does not exist!');
         }
-      }
-    }).catch(function(err){
-      callback(undefined, err);
-    });
+      }).catch(function(err){
+        callback(undefined, err);
+      });
+    } else {
+      self.modelData.isRoot = true;
+      self.schemas.category.create(self.modelData).then(function(category){
+        callback(category, undefined);
+      }).catch(function(err){
+        callback(undefined, err);
+      });
+    }
   }
 
   successAction(){

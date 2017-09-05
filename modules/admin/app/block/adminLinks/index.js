@@ -12,13 +12,22 @@ class Neon_block_admin_links extends Neon_block_html {
     this.init();
   }
 
-  init(){
+  checkActiveCategory(links){
+    var self = this;
     var path = pathToRegexp(context.get('route'));
-    this.links.forEach(function(link){
+    links.forEach(function(link){
       if(path.exec(link.link)){
         link.active = true;
       }
+      if(typeof(link.links) !== 'undefined'){
+        console.log(link.links);
+        self.checkActiveCategory(link.links);
+      }
     });
+  }
+
+  init(){
+    this.checkActiveCategory(this.links);
     this.setContent('links', this.links);
   }
 

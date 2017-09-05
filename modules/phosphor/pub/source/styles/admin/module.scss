@@ -2,7 +2,10 @@
 @import './blocks/general',
         './blocks/navigation',
         '../components/messages',
+        '../components/form',
         './blocks/page-layout';
 
 //Page Specific
-@import './blocks/post-center/post-center';
+@import './blocks/post-center',
+        './blocks/composer',
+        './blocks/categorizer';

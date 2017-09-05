@@ -7,10 +7,12 @@ module.exports = {
     {
         "name":"head",
         "type":"html",
+        "nowrap": true,
         "template": "page/main/head.html",
         "blocks": [
           {
             "name":"headContent",
+            "nowrap": true,
             "type": "list",
             "blocks": []
           }
