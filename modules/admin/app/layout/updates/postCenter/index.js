@@ -12,7 +12,7 @@ module.exports = {
               "name": "posts",
               "type": "html",
               "model": "admin/postCenter/list",
-              "template": "admin/main/content/postCenter/posts.html",
+              "template": "admin/main/content/postCenter/list.html",
               "blocks": []
             }
           ]

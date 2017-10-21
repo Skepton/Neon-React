@@ -25,6 +25,7 @@
     "connect-flash": "*",
     "passport": "*",
     "passport-local": "*",
+    "multiparty": "*",
     "winston": "*",
     "moment": "*",
     "gulp": "*",

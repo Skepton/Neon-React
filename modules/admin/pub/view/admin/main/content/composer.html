@@ -1,62 +1,104 @@
-<!--{{model|dump}}-->
-<div id="editor" class="composer-editor" neon-composer-editor>
-  <form id="composer-form" class="composer-editor__form" action="/admin/composer/save/{{model.post.hashid}}" method="POST">
-
-    <input id="header" type="hidden" name="header" value="{{model.post.header}}" />
-
-    <div class="input-box title">
-      <div class="input-box__container">
-        <label for="header">Title</label>
-        <input id="headline" type="text" name="headline" value="{{model.post.headline}}" placeholder="What is it about?" required />
-      </div>
-    </div>
-
-    <div class="input-box content">
-      <div class="input-box__container">
-        <label for="header">Content</label>
-        <textarea id="body" name="body" class="materialize-textarea" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pellentesque mauris id maximus bibendum. Nulla euismod diam nec commodo lobortis." required>{{model.post.body}}</textarea>
-      </div>
-    </div>
-
-    <div class="input-box misc">
-      <div class="input-box__container input-box__container--half">
-        <label for="header">Source</label>
-        <input id="source" type="text" name="source" value="{{model.post.source}}" placeholder="Story credits goes to" />
-      </div>
-
-      <div class="input-box__container input-box__container--half">
-        <label for="header">Tags</label>
-        <input id="tags" type="text" name="tags" value="{{model.post.tags}}" placeholder="Tags" />
-      </div>
-    </div>
-
-    <div class="input-box category">
-      <select name="category">
-        <option value="">No Category</option>
-        {% for category in model.categoryTree %}
-          <option value="{{category.id}}"{% if category.id == model.post.categoryId %}selected{% endif %}>{{category.title}}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    {% if model.categoryTree.length <= 0 %}
-      <p>No categories - please add a category using the <a href="/admin/settings/categorizer">Categorizer</a></p>
-    {% endif %}
-
-  </form>
-
+<div id="editor" class="composer-editor" neon-composer>
   <div class="composer-editor__bar">
     <form id="delete-form" action="/admin/composer/delete/{{model.post.hashid}}" method="POST">
       <input id="delete-form-submit" type="submit" value="delete"/>
     </form>
     <input id="composer-form-submit" type="submit" value="save" />
   </div>
+  <div class="composer-editor__content">
+    <form id="composer-form" class="composer-editor__form" action="/admin/composer/save/{{model.post.hashid}}" method="POST">
 
+      <input id="header-image" type="hidden" name="header" value="{{model.post.header}}" />
+
+      <div class="input-box title">
+        <div class="input-box__container">
+          <label for="headline">Title</label>
+          <div id="headline" type="text" class="input-div" name="headline" placeholder="What is it about?" required autocomplete="off" contenteditable="true">{{model.post.headline}}</div>
+        </div>
+      </div>
+
+      <div class="input-box content">
+        <div class="input-box__container">
+          <label for="body">Content</label>
+          <div id="body" name="body" class="input-div" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pellentesque mauris id maximus bibendum. Nulla euismod diam nec commodo lobortis." required contenteditable="true">{{model.post.body|safe}}</div>
+        </div>
+      </div>
+
+      <div class="input-box misc">
+        <div class="input-box__container input-box__container--half">
+          <label for="source">Source</label>
+          <input id="source" type="text" name="source" value="{{model.post.source}}" placeholder="Story credits goes to" autocomplete="off"/>
+        </div>
+
+        <div class="input-box__container input-box__container--half">
+          <label for="tags">Tags</label>
+          <input id="tags" type="text" name="tags" value="{{model.post.tags}}" placeholder="Tags" autocomplete="off"/>
+        </div>
+      </div>
+
+      <div class="input-box category">
+        <select name="category">
+          <option value="">No Category</option>
+          {% for category in model.categoryTree %}
+            <option value="{{category.id}}"{% if category.id == model.post.categoryId %}selected{% endif %}>{{category.title}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      {% if model.categoryTree.length <= 0 %}
+        <p>No categories - please add a category using the <a href="/admin/settings/categorizer">Categorizer</a></p>
+      {% endif %}
+
+    </form>
+
+    <div id="composer-preview" class="composer-editor__preview" neon-composer-preview>
+      <div id="composer-preview__container"></div>
+      {{childBlock.composerPreviewTemplate}}
+    </div>
+
+  </div>
 </div>
 
 <script>
-  var categorizer = new neonComponentHandler('neon-composer-editor');
-  categorizer.when('click', '#composer-form-submit', (event, element) => {
-    categorizer.findOne('#composer-form').submit();
+  var neonComposer = new neonComponentHandler('neon-composer');
+  neonComposer.when('click', '#composer-form-submit', (event, element) => {
+
+    var headline = neonComposer.findOne('#headline');
+    var body = neonComposer.findOne('#body');
+    var form = neonComposer.findOne('#composer-form');
+
+    var data = new FormData(form);
+
+    data.append('headline', headline.textContent);
+    data.append('body', body.innerText);
+    data.append('category', false);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', form.getAttribute('action'), true);
+    xhr.onload = function () {
+      console.log('Saved!');
+    };
+    xhr.send(data);
+
+  });
+
+  var previewContainerElement = neonComposer.findOne('#composer-preview__container');
+  var templateElement = neonComposer.findOne('#composer-preview__template');
+  var template = nunjucks.compile(templateElement.innerHTML);
+
+  // Handle markdown parser
+  neonComposer.when('keyup', '#headline, #body', (event, element) => {
+    var headline = neonComposer.findOne('#headline');
+    var body = neonComposer.findOne('#body');
+    var parsed = markdownParse(headline.textContent, body.innerText);
+
+    //var renderedPreview = template.render(parsed);
+    //previewContainerElement.innerHTML = renderedPreview;
+  });
+
+  // Trigger markdown parse on inital page load
+  document.addEventListener('DOMContentLoaded', function(){
+      var triggerElement = neonComposer.findOne('#headline');
+      triggerElement.dispatchEvent(new CustomEvent('keyup'));
   });
 </script>

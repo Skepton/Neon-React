@@ -1,0 +1,17 @@
+<script id="composer-preview__template" type="text">
+  {% raw %}
+    <article class="blog-article">
+      <header class="blog-article__header">
+        {% if header %}
+          <div class="blog-article__header--image">
+            <img src="{{header}}"/>
+          </div>
+        {% endif %}
+        <h2 class="blog-article__header--headline">{{headline}}</h2>
+      </header>
+      <main class="blog-article__content">
+        {{body|safe}}
+      </main>
+    </article>
+  {% endraw %}
+</script>

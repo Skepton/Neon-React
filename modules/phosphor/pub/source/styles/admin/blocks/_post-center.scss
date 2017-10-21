@@ -3,5 +3,28 @@
     @include info-bar();
   }
   & &__content {
+    padding: 1rem 2rem;
+  }
+  & &__list {
+    background-color: white;
+    &--item {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background-color: white;
+      .headline {
+        margin-bottom: 0.5rem;
+        color: black;
+        font-size: 1rem;
+        font-weight: 600;
+        a {
+          color: inherit;
+        }
+      }
+      .body {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
   }
 }

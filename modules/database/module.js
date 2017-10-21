@@ -73,13 +73,13 @@ class Neon_database extends Neon_abstract_module {
           schema.associate(self.schemas);
         }
         /* Sync schema with database */
-        schema.sync({force: true}).then(function(){
+        schema.sync(/*{force: true}*/).then(function(){
           callback();
         });
       }, function(){
-        self.schemas.user.create({username: 'Skepton', password: 'blog', admin: true}).then(function(user){
+        /*self.schemas.user.create({username: 'Skepton', password: 'blog', admin: true}).then(function(user){
           console.log(user.get({plain: true}));
-        });
+        });*/
       });
     }).catch(function (err) {
       console.log(err);

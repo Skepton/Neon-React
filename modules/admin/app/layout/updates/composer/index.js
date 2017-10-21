@@ -8,7 +8,14 @@ module.exports = {
           "type": "html",
           "model": "admin/composer",
           "template": "admin/main/content/composer.html",
-          "blocks": []
+          "blocks": [
+            {
+              "name": "composerPreviewTemplate",
+              "type": "html",
+              "template": "admin/main/content/composer/preview.html",
+              "blocks": []
+            }
+          ]
         }
       }
     ]

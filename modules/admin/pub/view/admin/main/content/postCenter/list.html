@@ -1,0 +1,35 @@
+<div class="post-center-list" neon-post-center-list>
+  {% for article in model %}
+    <article class="post-center__list--item">
+      {% if article.headline %}
+          <h2 class="headline truncate"><a href="admin/composer/{{article.hashid}}">{{article.headline}}</a></h2>
+      {% else %}
+          <h2 class="headline truncate"><a href="admin/composer/{{article.hashid}}">This post does not have a headline... yet!</a></h2>
+      {% endif %}
+
+      {% if article.body %}
+          <p class="body truncate">{{article.body|truncate(64, True)}}</p>
+      {% else %}
+          <p class="body truncate">This could be the start of the article</p>
+      {% endif %}
+
+      <div class="post-info">
+        <span class="author">By: {{article.author.displayname}}</span>
+        <span class="separator"> - </span>
+        <span class="date" data-raw-date="{{article.postDate}}" title="">{{article.postDate}}</span>
+      </div>
+    </article>
+  {% else %}
+    <p class="no-posts notice">No articles written yet!</p>
+  {% endfor %}
+</div>
+
+<script>
+  var postCenterList = new neonComponentHandler('neon-post-center-list');
+  var dateElements = postCenterList.findAll('.post-center__list--item .date');
+  dateElements.forEach(function(dateElement){
+    var date = moment(dateElement.dataset.rawDate);
+    dateElement.textContent = date.format('MMM Do YY');
+    dateElement.title = date.format('MMMM Do YYYY, HH:mm:ss');
+  });
+</script>

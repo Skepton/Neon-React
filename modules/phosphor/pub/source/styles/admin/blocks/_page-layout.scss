@@ -14,7 +14,7 @@ $navigation__header--width: 175px !default;
     flex-direction: column;
     width: calc(100vw - #{$navigation__header--width});
     height: 100vh;
-    padding: 0 2rem;
+    padding: 0;
     max-height: 100vh;
     transform: translate3d(0,0,0);
     #messages {
