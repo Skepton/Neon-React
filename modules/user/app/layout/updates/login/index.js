@@ -7,7 +7,7 @@ module.exports = {
           "name": "login",
           "type": "html",
           "template": "user/main/content/login.html",
-          "blocks": []
+          "children": []
         }
       }
     ]

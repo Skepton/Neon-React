@@ -7,7 +7,7 @@ module.exports = {
           "name": "settings",
           "type": "html",
           "template": "admin/main/content/settings.html",
-          "blocks": []
+          "children": []
         }
       }
     ]

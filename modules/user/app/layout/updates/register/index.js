@@ -7,7 +7,7 @@ module.exports = {
           "name": "register",
           "type": "html",
           "template": "user/main/content/register.html",
-          "blocks": []
+          "children": []
         }
       }
     ]

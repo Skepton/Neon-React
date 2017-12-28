@@ -7,13 +7,13 @@ module.exports = {
           "name": "postCenter",
           "type": "html",
           "template": "admin/main/content/postCenter.html",
-          "blocks": [
+          "children": [
             {
               "name": "posts",
               "type": "html",
               "model": "admin/postCenter/list",
               "template": "admin/main/content/postCenter/list.html",
-              "blocks": []
+              "children": []
             }
           ]
         }

@@ -49,7 +49,7 @@ module.exports.init = function(sequelize){
   });
 
   Post.associate = function(models){
-    Post.belongsTo(models.user, {as: 'author', foreignKey: 'userId'});
+    Post.belongsTo(models.user, {as: 'author'});
     Post.belongsTo(models.category, {as: 'category'});
 
     Post.addHook('beforeFind', function(options){

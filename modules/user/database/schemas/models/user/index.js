@@ -1,6 +1,7 @@
 var Sequelize = require('sequelize'),
     path = require('path'),
     async = require('async'),
+    restifyModel = require(path.join(appRoot,'toolkit/neon/restifyModel.js')),
     hashPassword = Neon.getFile('app/helper/handlePassword').hashPassword;
 
 function slugify(str) {
@@ -62,8 +63,21 @@ module.exports.init = function(sequelize){
     }
   });
 
+  // Setup rest API for model
+  options = {
+    endpoints: ['id'],
+    listDefaults: {
+      limit: 10,
+      sortby: 'createdAt',
+      order: 'desc'
+    },
+    exclude: ['password','createdAt','updatedAt']
+  }
+  restifyModel(User, options, Neon.app);
+
+  // Set model associations
   User.associate = function(models){
-    User.hasMany(models.post);
+    User.hasMany(models.post, {as: 'author'});
     User.hasMany(models.comment);
 
     User.beforeCreate(function(instance) {

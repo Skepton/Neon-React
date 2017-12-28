@@ -1,45 +1,28 @@
 module.exports = {
   "name": "root",
-  "type": "html",
-  "template": "page/main.html",
-  "output": true,
-  "blocks": [
-    {
-        "name":"head",
-        "type":"html",
-        "nowrap": true,
-        "template": "page/main/head.html",
-        "blocks": [
-          {
-            "name":"headContent",
-            "nowrap": true,
-            "type": "list",
-            "blocks": []
-          }
-        ]
-    },
-    {
-        "name":"message",
-        "type":"flash",
-        "template": "page/main/message.html",
-        "blocks": []
-    },
+  "component": "page/skin/react/components/template",
+  "rootTemplate": "page/main.html",
+  "reactTemplate": "page/skin/react/templates/root",
+  "outputSelector": "Neon",
+  "children": [
     {
       "name": "header",
-      "type": "html",
-      "template": "page/main/header.html",
-      "blocks": [
+      "component": "page/skin/react/components/header",
+      "reactTemplate": "page/skin/react/templates/header",
+      "children": [
         {
           "name": "headerLinks",
-          "type": "list",
-          "blocks": []
+          "component": "page/skin/react/components/list",
+          "reactTemplate": "page/skin/react/templates/list",
+          "children": []
         }
       ]
     },
     {
-      "name":"content",
-      "type": "list",
-      "blocks": []
+      "name": "content",
+      "component": "page/skin/react/components/template",
+      "reactTemplate": "page/skin/react/templates/list",
+      "children": []
     }
   ]
 }

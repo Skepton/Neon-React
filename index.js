@@ -38,4 +38,4 @@ app.use(express.static(path.join(__dirname, config.pubPath)))
    }))
    .use(flash());
 
-Neon.init(app);
+Neon.init(app, config);

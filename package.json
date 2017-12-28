@@ -35,6 +35,22 @@
     "gulp-autoprefixer":"*",
     "merge-stream": "*",
     "continuation-local-storage": "*",
-    "json_merger": "*"
+    "json_merger": "*",
+    "webpack": "*",
+    "webpack-glob-entries": "*",
+    "file-loader": "*",
+    "babel-loader": "*",
+    "babel-core": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-templates": "*",
+    "react-templates-loader": "*"
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "webpack": "webpack",
+    "webpack-watch": "webpack --watch --progress"
   }
 }

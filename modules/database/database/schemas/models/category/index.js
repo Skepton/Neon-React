@@ -36,7 +36,7 @@ module.exports.init = function(sequelize){
     isRoot: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
-    }
+    },
   },
   {
     indexes: [
@@ -63,7 +63,6 @@ module.exports.init = function(sequelize){
       }
       return options;
     });
-
   }
   return Category;
 }

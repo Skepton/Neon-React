@@ -1,0 +1,3 @@
+<div class="list">
+  <div class="list-item" rt-repeat="child in this.children" key="{child.name}">{child.component}</div>
+</div>

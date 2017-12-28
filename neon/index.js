@@ -2,7 +2,7 @@ var path = require('path'),
     async = require('async'),
     fs = require('fs'),
     ncp = require('ncp'),
-    canary = require(path.join(appRoot,'toolkit','canary.js')),
+    canary = require(path.join(appRoot,'toolkit','neon','canary.js')),
     join = require('path').join;
 
 var exec = require('child_process').exec;
@@ -18,9 +18,12 @@ class Neon {
   /*
   ** Starts Neon initiation sequence
   */
-  init(app){
+  init(app, config){
     /* Set Node app */
     this.app = app;
+
+    /* Set Config */
+    this.config = config;
 
     /* Emit function start event */
     this.canary.emit('neon:init_start');
@@ -28,19 +31,12 @@ class Neon {
     /* Load / register all modules found in 'modules' folder */
     this.registerModules();
 
-    /* Deploy all static content */
-    this.moduleContentDeploy();
-
-    /* Load / register all modules found in 'modules' folder */
-    this.registerTheme();
-
-    /* Deploy theme conent */
-    this.themePrepareDeploy(this.theme);
+    /* Make sure pub/static folders exist */
+    this.prepareDeploy();
 
     this.runGulpCompiler();
 
-    /* Preload blocks & models for improved performence */
-    this.preloadBlocks();
+    /* Preload models for improved performence */
     this.preloadModels();
 
     /* Setup production / development error handlers, start Express server */
@@ -250,7 +246,7 @@ class Neon {
     var self = this;
     var file = false;
     async.detectSeries(this.modules, function(module, callback){
-      var filePath = path.join(appRoot,'./pub/static',moduleFilePath);
+      var filePath = path.join(module.getPath(),'./skin/templates',templateFilePath);
       try {
         var stats = fs.lstatSync(filePath);
         if (stats.isFile()) {
@@ -263,21 +259,6 @@ class Neon {
       file = result;
     });
     return file;
-  }
-
-  /*
-  ** Preload block types from active modules
-  */
-  preloadBlocks() {
-    var blocks = this.getAllFiles('app/block', true);
-    this.blocks = blocks;
-  }
-
-  /*
-  ** Return block type from proloaded blocks
-  */
-  getBlockType(blockType){
-    return this.blocks[blockType];
   }
 
   readAllFiles(modulePath,folderPath){
@@ -362,7 +343,7 @@ class Neon {
     });
   }
 
-  moduleContentDeploy(){
+  prepareDeploy(){
     var self = this;
 
     /* Make sure pub & pub/static folders exist */
@@ -374,94 +355,11 @@ class Neon {
     var pubStaticFolder = path.join(appRoot,'./pub/static');
     if (!fs.existsSync(pubStaticFolder)){
         fs.mkdirSync(pubStaticFolder);
-    }
-
-    var pubViewFolder = path.join(appRoot,'./pub/view');
-    if (!fs.existsSync(pubViewFolder)){
-        fs.mkdirSync(pubViewFolder);
-    }
-
-    /* Find and recreate all registered modules' static content */
-    async.eachSeries(self.modules, function(module, callback){
-      var moduleStaticFolder = path.join(module.path, 'pub/static');
-      if (fs.existsSync(moduleStaticFolder) && !module.isThemeModule){
-        console.log(module.name + ' has static content!');
-        ncp(moduleStaticFolder, pubStaticFolder, function(err){
-          if(err && err.Error != 'EEXIST'){
-            console.log('Static deploy: Static content error: '+err);
-          }
-        });
-      }
-      callback();
-    });
-
-
-    /* Find and recreate all registered modules' view content */
-    async.eachSeries(self.modules, function(module, callback){
-      var moduleViewFolder = path.join(module.path, 'pub/view');
-      if (fs.existsSync(moduleViewFolder) && !module.isThemeModule){
-        console.log(module.name + ' has view content!');
-        ncp(moduleViewFolder, pubViewFolder, function(err){
-          if(err && err[0].code != 'EEXIST'){
-            console.log('Static deploy: View content error'+err);
-          }
-        });
-      }
-      callback();
-    });
-
-  }
-
-  themePrepareDeploy(theme){
-    var self = this;
-    var deployTheme = theme;
-    if(deployTheme.parent){
-      self.themePrepareDeploy(deployTheme.parent);
-    }
-    self.themeContentDeploy(deployTheme);
-  }
-
-  themeContentDeploy(theme){
-
-    /* Make sure pub & pub/static folders exist */
-    var pubFolder = path.join(appRoot,'./pub');
-    if (!fs.existsSync(pubFolder)){
-        fs.mkdirSync(pubFolder);
-    }
-
-    var pubStaticFolder = path.join(appRoot,'./pub/static');
-    if (!fs.existsSync(pubStaticFolder)){
-        fs.mkdirSync(pubStaticFolder);
-    }
-
-    var pubViewFolder = path.join(appRoot,'./pub/view');
-    if (!fs.existsSync(pubViewFolder)){
-        fs.mkdirSync(pubViewFolder);
-    }
-
-    var themeStaticFolder = path.join(theme.path, 'pub/static');
-    if (fs.existsSync(themeStaticFolder)){
-      console.log(theme.name + ' has static content!');
-      ncp(themeStaticFolder, pubStaticFolder, {'clobber': true}, function(err){
-        if(err && err[0].code != 'EEXIST'){
-          console.log('Theme content deploy: Theme static content error: '+err);
-        }
-      });
-    }
-
-    var themeViewFolder = path.join(theme.path, 'pub/view');
-    if (fs.existsSync(themeViewFolder)){
-      console.log(theme.name + ' has view content!');
-      ncp(themeViewFolder, pubViewFolder, {'clobber': true}, function(err){
-        if(err && err[0].code != 'EEXIST'){
-          console.log('Theme content deploy: Theme view content error'+err);
-        }
-      });
     }
   }
 
   runGulpCompiler(){
-    exec('gulp scss', function(err, stdout, stderr){
+    exec('npm run gulp scss', function(err, stdout, stderr){
       if (err) {
         // node couldn't execute the command
         return;

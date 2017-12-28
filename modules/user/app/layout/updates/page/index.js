@@ -5,9 +5,9 @@ module.exports = {
       {
         "@addChildBlock": {
           "name": "loginLink",
-          "type": "userHtml",
-          "template": "page/main/header/loginLink.html",
-          "blocks": []
+          "component": "page/skin/react/components/template",
+          "reactTemplate": "user/skin/react/templates/headerLinks",
+          "children": []
         }
       }
     ]

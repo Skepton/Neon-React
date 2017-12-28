@@ -8,7 +8,7 @@ module.exports = {
           "type": "html",
           "model": "admin/settings/categorizer",
           "template": "admin/main/content/settings/categorizer.html",
-          "blocks": []
+          "children": []
         }
       }
     ]

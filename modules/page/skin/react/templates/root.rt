@@ -1,0 +1,3 @@
+<div className="page-wrapper">
+  {this.children.header}
+</div>

@@ -1,7 +1,9 @@
 var path = require('path'),
+    nunjucks = require(path.join(appRoot,'toolkit','neon','nunjucksExtended.js')),
     getNamespace = require('continuation-local-storage').getNamespace,
     context = getNamespace('com.neon'),
     async = require('async');
+
 var Neon_abstract = require(path.join(appRoot,'abstract/module'));
 
 class Neon_router extends Neon_abstract {
@@ -64,7 +66,19 @@ class Neon_router extends Neon_abstract {
                   context.set('route', fullPath);
 
                   if(!conditional || (conditional && self.conditional(conditional))){
-                    self.layoutRenderer(preparedLayout);
+                    var rootBlock = self.getRootBlock(preparedLayout);
+                    if(rootBlock){
+                      console.log(preparedLayout);
+                      nunjucks.render(Neon.getTemplateFile(rootBlock.rootTemplate),{layout: JSON.stringify(preparedLayout)},function(err, html){
+                        if(!err){
+                          res.send(html);
+                        } else {
+                          res.redirect('/');
+                        }
+                      });
+                    } else {
+                      res.redirect('/');
+                    }
                   } else {
                     res.redirect('/');
                   }
@@ -133,7 +147,7 @@ class Neon_router extends Neon_abstract {
 
     if(layoutUpdateFiles.length > 0){
       layoutUpdateFiles.forEach(function(layoutUpdate){
-        layout = self.jsonMerge(layout,layoutUpdate);
+        layout = self.jsonMerge(layout, layoutUpdate);
       });
     }
     return layout;
@@ -188,13 +202,13 @@ class Neon_router extends Neon_abstract {
             block[actionObject.key] = actionObject.value;
             break;
           case "@addChildBlock" ||  "@addChildBlockAfter":
-            block["blocks"].push(actionObject);
+            block["children"].push(actionObject);
             break;
           case "@addChildBlockBefore":
-            block["blocks"].unshift(actionObject);
+            block["children"].unshift(actionObject);
             break;
           case "@removeChildBlock":
-            block['blocks'] = block["blocks"].filter(function(childBlock){
+            block['children'] = block["childres"].filter(function(childBlock){
               var keep = true;
               for(var key in actionObject){
                 if(childBlock[key] === actionObject[key]){
@@ -215,7 +229,7 @@ class Neon_router extends Neon_abstract {
     if(isMatch){
       self.performAction(parentBlock, modifications.actions);
     }
-    parentBlock.blocks.forEach(function(block){
+    parentBlock.children.forEach(function(block){
       self.iterateBlocks(block, modifications);
     });
   }
@@ -240,72 +254,12 @@ class Neon_router extends Neon_abstract {
     return base;
   }
 
-  wrapBlock(html,block){
-    if(block.nowrap) {
-      return html;
+  getRootBlock(preparedLayout){
+    if(preparedLayout.name === 'root'){
+      return preparedLayout;
     } else {
-      return `<section id="${block.name}" class="type-${block.type}">${html}</section>`;
+      return false;
     }
-  }
-
-  loadBlock(block, callback){
-    var self = this;
-
-    var blockClass = Neon.getBlockType(block.type);
-    var blockInstance = new blockClass(block);
-
-    if(block.blocks && block.blocks.length > 0){
-      var blockHtml = {};
-      async.eachSeries(block.blocks, function(block, blockCallback){
-        self.loadBlock(block, function(html){
-          blockHtml[block.name] = self.wrapBlock(html, block);
-          blockCallback();
-        });
-      }, function(){
-        blockInstance.setContent('childBlock', blockHtml);
-        if(block.model){
-          var modelClass = Neon.getModel(block.model);
-          var modelInstance = new modelClass();
-
-          modelInstance.getData(function(data){
-            blockInstance.setContent('model', data);
-            blockInstance.render(function(html){
-              callback(html);
-            });
-          });
-        } else {
-          blockInstance.render(function(html){
-            callback(html);
-          });
-        }
-      });
-    } else {
-      if(block.model){
-        var modelClass = Neon.getModel(block.model);
-        var modelInstance = new modelClass();
-
-        modelInstance.getData(function(data){
-          blockInstance.setContent('model', data);
-          blockInstance.render(function(html){
-            callback(html);
-          });
-        });
-      } else {
-        blockInstance.render(function(html){
-          callback(html);
-        });
-      }
-    }
-
-  }
-
-  layoutRenderer(preparedLayout){
-    var self = this;
-    console.time('render');
-    self.loadBlock(preparedLayout, function(){
-      console.timeEnd('render');
-      console.timeEnd('request');
-    });
   }
 
   conditional(conditionalType){

@@ -8,7 +8,7 @@ module.exports = {
           "type": "html",
           "nowrap": true,
           "template": "admin/main/head/headContent.html",
-          "blocks": []
+          "children": []
         }
       }
     ]

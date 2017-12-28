@@ -57,29 +57,23 @@ class Neon_database extends Neon_abstract_module {
         self.schemas[schema.name] = loadedSchema;
       });
 
-      /*
-      ** Load Schema updates from installed models
-      */
-      // var schemas = Neon.getAllFiles('database/schemas/models');
-      //
-      // schemas.forEach(function(schema){
-      //   var loadedSchema = schema.init(sequelize);
-      //   self.schemas[schema.name] = loadedSchema;
-      // });
-
       async.eachSeries(self.schemas, function(schema, callback){
-        /* Initiate any associations in the schema*/
-        if ("associate" in schema) {
-          schema.associate(self.schemas);
-        }
-        /* Sync schema with database */
-        schema.sync(/*{force: true}*/).then(function(){
+
+          /* Initiate any associations in the schema*/
+          if ("associate" in schema) {
+            schema.associate(self.schemas);
+          }
           callback();
-        });
+
       }, function(){
-        /*self.schemas.user.create({username: 'Skepton', password: 'blog', admin: true}).then(function(user){
-          console.log(user.get({plain: true}));
-        });*/
+        sequelize.sync({force: true}).then(function(){
+          self.schemas.user.create({username: 'Skepton', password: 'blog', admin: true}).then(function(user){
+            console.log(user.get({plain: true}));
+            self.schemas.user.create({username: 'Xeinon', password: 'notblog', admin: false}).then(function(user){
+              console.log(user.get({plain: true}));
+            });
+          });
+        });
       });
     }).catch(function (err) {
       console.log(err);

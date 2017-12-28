@@ -3,39 +3,32 @@ module.exports = {
   "type": "html",
   "template": "admin/main.html",
   "output": true,
-  "blocks": [
+  "children": [
     {
         "name":"head",
-        "type":"html",
-        "nowrap": true,
         "template": "admin/main/head.html",
-        "blocks": [
+        "children": [
           {
             "name":"headContent",
-            "type": "list",
-            "nowrap": true,
-            "blocks": []
+            "children": []
           }
         ]
     },
     {
         "name":"message",
-        "type":"flash",
+        "model": "messages",
         "template": "page/main/message.html",
-        "blocks": []
+        "children": []
     },
     {
       "name": "header",
-      "type": "html",
       "template": "admin/main/header.html",
-      "blocks": [
+      "children": [
         {
           "name": "headerLinks",
-          "type": "list",
-          "blocks": [
+          "children": [
             {
               "name": "adminHeaderLinks",
-              "type": "adminLinks",
               "template": "admin/main/header/headerLinks.html",
               "links": [
                 {
@@ -56,7 +49,7 @@ module.exports = {
                   ]
                 }
               ],
-              "blocks": []
+              "children": []
             }
           ]
         }
@@ -64,8 +57,7 @@ module.exports = {
     },
     {
       "name":"content",
-      "type": "list",
-      "blocks": []
+      "children": []
     }
   ]
 }

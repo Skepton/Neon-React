@@ -1,9 +1,10 @@
 config = {
   theme: 'phosphor',
   pubPath: 'pub/',
+  apiEndpoint: '/api/',
   port: 3000,
   ip: "0.0.0.0",
-  baseUrl: "0.0.0.0:3000"
+  baseUrl: "192.168.1.163:3000"
 }
 
 module.exports = config;

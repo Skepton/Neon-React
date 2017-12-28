@@ -8,7 +8,7 @@ module.exports = {
           "model": "user",
           "type": "html",
           "template": "user/main/content/user.html",
-          "blocks": []
+          "children": []
         }
       }
     ]
