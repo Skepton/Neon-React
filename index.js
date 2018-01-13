@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, config.pubPath)))
    .use(session({
      store: new RedisStore({client: redis }),
      secret: 'Tango Down',
-     cookie: { maxAge : 604800000 },
+     cookie: { /*secure : config.ssl,*/ maxAge : 604800000 },
      saveUninitialized: false,
      resave: false
    }))

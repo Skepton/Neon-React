@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import path from 'path';
 
 module.exports = {
   parse: function(layout){
     var self = this;
-    var root = self.renderComponent(layout);
-    ReactDOM.render(
-      <root.class block={root.block} template={root.template} children={root.children} />,
-      document.getElementById(layout.outputSelector)
-    );
+    return self.renderComponent(layout);
   },
   renderComponent: function(block){
     var self = this;

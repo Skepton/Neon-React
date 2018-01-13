@@ -1,15 +1,15 @@
 module.exports = {
-  // "@reference": {
-  //   "name": "headerLinks",
-  //   "@actions": [
-  //     {
-  //       "@addChildBlock": {
-  //         "name": "adminLink",
-  //         "type": "userHtml",
-  //         "template": "page/main/header/adminLink.html",
-  //         "children": []
-  //       }
-  //     }
-  //   ]
-  // }
+  "@reference": {
+    "name": "headerLinks",
+    "@actions": [
+      {
+        "@addChildBlock": {
+          "name": "adminLink",
+          "component": "user/skin/react/components/loginLink",
+          "reactTemplate": "user/skin/react/templates/adminLink",
+          "children": []
+        }
+      }
+    ]
+  }
 }

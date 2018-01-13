@@ -22,8 +22,8 @@ class Neon_model_login extends Neon_model_abstract {
     self.loginSetup();
 
     self.authenticate().then(function(user){
-      self.successAction();
-    }, function(err){
+      self.successAction(user);
+    }).catch(function(err){
       self.failureAction(err);
     });
   }
@@ -67,14 +67,19 @@ class Neon_model_login extends Neon_model_abstract {
     });
   }
 
-  successAction(){
+  successAction(user){
     this.request.flash('notice', 'Login Successful');
-    this.response.redirect('/');
+    var userData = {
+      id: user.id,
+      username: user.username,
+      admin: user.admin
+    };
+    this.response.send(userData);
   }
 
   failureAction(err){
     this.request.flash('error', err);
-    this.response.redirect('/login');
+    this.response.status(401).send({error: err});
   }
 
 }

@@ -38,6 +38,7 @@ class Neon_router extends Neon_abstract {
   routerSetup(){
     var self = this;
     var layoutSetups = Neon.getFolders('app/layout/setup/');
+    var compiledRoutes = [];
 
     async.forEachOf(layoutSetups, function(routePaths, method, callbackLayouts){
       async.eachSeries(routePaths, function(routePath, callbackRoutePaths){
@@ -49,72 +50,95 @@ class Neon_router extends Neon_abstract {
           // Used for carrying conditional checked from parent to child routes
           var conditional = route.conditional || false;
 
-          switch (type) {
-            case 'get':
+          compiledRoutes.push({type: type, path: fullPath, conditional: conditional, layout: route, area: route.area});
 
-              var preparedLayout = self.prepareLayout(route);
-              Neon.app.get(fullPath, function(req,res){
-                console.time('request');
-
-                /*
-                ** Request context created, setting request and response object
-                ** in context for fetching anywhere within this context
-                */
-                context.run(function(){
-                  context.set('request', req);
-                  context.set('response', res);
-                  context.set('route', fullPath);
-
-                  if(!conditional || (conditional && self.conditional(conditional))){
-                    var rootBlock = self.getRootBlock(preparedLayout);
-                    if(rootBlock){
-                      console.log(preparedLayout);
-                      nunjucks.render(Neon.getTemplateFile(rootBlock.rootTemplate),{layout: JSON.stringify(preparedLayout)},function(err, html){
-                        if(!err){
-                          res.send(html);
-                        } else {
-                          res.redirect('/');
-                        }
-                      });
-                    } else {
-                      res.redirect('/');
-                    }
-                  } else {
-                    res.redirect('/');
-                  }
-                });
-
-              });
-              break;
-
-            case 'post':
-              Neon.app.post(fullPath, function(req,res){
-                context.run(function(){
-
-                  /*
-                  ** Request context created, setting request and response object
-                  ** in context for fetching anywhere within this context
-                  */
-                  context.set('request', req);
-                  context.set('response', res);
-
-                  if(!conditional || (conditional && self.conditional(conditional))){
-                    self.handlePost(route);
-                  } else {
-                    res.redirect('/');
-                  }
-                });
-
-              });
-              break;
-          }
           callbackRoutes();
+
         });
         callbackRoutePaths();
       });
       callbackLayouts();
     });
 
+    async.eachSeries(compiledRoutes, function(route, callbackRoutes){
+      switch (route.type) {
+        case 'get':
+
+          var preparedLayout = self.prepareLayout(route.layout);
+          Neon.app.get(route.path, function(req,res){
+            console.time('request');
+
+            var compressedCompiledRoutes = compiledRoutes.reduce(function(result, preCompiledRoute){
+              if(route.area == preCompiledRoute.area && preCompiledRoute.type == route.type){
+                result.push(preCompiledRoute.path);
+              }
+              return result;
+            },[]);
+
+            /*
+            ** Request context created, setting request and response object
+            ** in context for fetching anywhere within this context
+            */
+            context.run(function(){
+              context.set('request', req);
+              context.set('response', res);
+              context.set('route', route.path);
+
+              if(!route.conditional || (route.conditional && self.conditional(route.conditional))){
+                if(req.query.ajax){
+                  var rootBlock = self.getRootBlock(preparedLayout);
+                  if(rootBlock){
+                    res.send(rootBlock);
+                  } else {
+                    res.status(401).send('Page not found');
+                  }
+                } else {
+                  var rootBlock = self.getRootBlock(preparedLayout);
+                  if(rootBlock){
+                    var layoutObject = {};
+                    layoutObject[route.path] = preparedLayout;
+                    nunjucks.render(Neon.getTemplateFile(rootBlock.rootTemplate), {layout: JSON.stringify(layoutObject), routes: JSON.stringify(compressedCompiledRoutes)}, function(err, html){
+                      if(!err){
+                        res.send(html);
+                      } else {
+                        res.redirect('/');
+                      }
+                    });
+                  } else {
+                    res.redirect('/');
+                  }
+                }
+              } else {
+                res.redirect('/');
+              }
+            });
+
+          });
+          break;
+
+        case 'post':
+          Neon.app.post(route.path, function(req,res){
+            context.run(function(){
+
+              /*
+              ** Request context created, setting request and response object
+              ** in context for fetching anywhere within this context
+              */
+              context.set('request', req);
+              context.set('response', res);
+
+              if(!route.conditional || (route.conditional && self.conditional(route.conditional))){
+                self.handlePost(route.layout);
+              } else {
+                res.redirect('/');
+              }
+            });
+
+          });
+          break;
+      }
+      callbackRoutes();
+    });
   }
 
   handlePost(route){

@@ -1,0 +1,7 @@
+<form role="form" method="post" onSubmit={this.handleSubmit}>
+	<label for="username">Username</label>
+	<input id="username" type="text" name="username" placeholder="Username" onChange={this.handleUsernameChange} autoFocus required>
+	<label for="password">Password</label>
+	<input id="password" type="password" name="password" placeholder="Password" onChange={this.handlePasswordChange} required>
+	<button type="submit" >Submit</button>
+</form>

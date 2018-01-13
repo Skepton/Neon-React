@@ -14,7 +14,7 @@ module.exports = {
   context: __dirname,
   resolve: {
     modules: resolveModules,
-    extensions: ['.js', '.jsx']
+    extensions: ['.js','.jsx']
   },
   watchOptions: {
     ignored: '/node_modules/',
@@ -31,7 +31,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react']
+          presets: ['es2015', 'react', 'stage-2']
         }
       },
       {
@@ -42,6 +42,14 @@ module.exports = {
             name: 'static/images/[hash].[ext]'
           }
         }]
+      },
+      {
+        test: require.resolve('zepto'),
+        use: "imports-loader?this=>window"
+      },
+      {
+        test: require.resolve('js-cookie'),
+        use: "imports-loader?this=>window"
       }
     ]
   }

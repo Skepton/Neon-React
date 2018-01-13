@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 class templateComponent extends React.Component {
 
   constructor(props){
-    super();
+    super(props);
     this.block = props.block;
     this.setTemplate(props.template);
     this.prepareChildren(props.children);

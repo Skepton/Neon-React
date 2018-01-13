@@ -4,6 +4,10 @@ module.exports = [
     "model": "login/post"
   },
   {
+    "path": "/isLoggedIn",
+    "model": "isLoggedIn/post"
+  },
+  {
     "path": "/register",
     "model": "register/post"
   },

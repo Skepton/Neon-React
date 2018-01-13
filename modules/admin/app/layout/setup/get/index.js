@@ -2,6 +2,7 @@ module.exports = [
   {
     "type": "get",
     "path": "/admin",
+    "area": "admin",
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['postCenter']
@@ -9,6 +10,7 @@ module.exports = [
   {
     "type": "get",
     "path": "/admin/settings",
+    "area": "admin",
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['settings']
@@ -16,6 +18,7 @@ module.exports = [
   {
     "type": "get",
     "path": "/admin/settings/categorizer",
+    "area": "admin",
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['categorizer']
@@ -23,6 +26,7 @@ module.exports = [
   {
     "type": "get",
     "path": "/admin/settings/categorizer/add/child/:parentCategory",
+    "area": "admin",
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['categorizerAdd']
@@ -30,6 +34,7 @@ module.exports = [
   {
     "type": "get",
     "path": "/admin/composer/:hashid",
+    "area": "admin",
     "conditional": "isAdmin",
     "handle": "admin",
     "handleUpdates": ['composer']

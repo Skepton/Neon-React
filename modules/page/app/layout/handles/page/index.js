@@ -3,7 +3,6 @@ module.exports = {
   "component": "page/skin/react/components/template",
   "rootTemplate": "page/main.html",
   "reactTemplate": "page/skin/react/templates/root",
-  "outputSelector": "Neon",
   "children": [
     {
       "name": "header",
@@ -14,13 +13,20 @@ module.exports = {
           "name": "headerLinks",
           "component": "page/skin/react/components/list",
           "reactTemplate": "page/skin/react/templates/list",
-          "children": []
+          "children": [
+            {
+              "name": "homeLink",
+              "component": "page/skin/react/components/template",
+              "reactTemplate": "page/skin/react/templates/homeLink",
+              "children": []
+            }
+          ]
         }
       ]
     },
     {
       "name": "content",
-      "component": "page/skin/react/components/template",
+      "component": "page/skin/react/components/list",
       "reactTemplate": "page/skin/react/templates/list",
       "children": []
     }

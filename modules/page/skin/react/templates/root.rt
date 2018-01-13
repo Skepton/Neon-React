@@ -1,3 +1,4 @@
 <div className="page-wrapper">
   {this.children.header}
+  {this.children.content}
 </div>

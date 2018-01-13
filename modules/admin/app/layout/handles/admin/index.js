@@ -1,7 +1,7 @@
 module.exports = {
   "name": "root",
   "type": "html",
-  "template": "admin/main.html",
+  "rootTemplate": "admin/main.html",
   "output": true,
   "children": [
     {
@@ -13,12 +13,6 @@ module.exports = {
             "children": []
           }
         ]
-    },
-    {
-        "name":"message",
-        "model": "messages",
-        "template": "page/main/message.html",
-        "children": []
     },
     {
       "name": "header",

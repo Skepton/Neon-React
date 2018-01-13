@@ -1,3 +1,13 @@
-import reactLayout from 'reactLayout';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import ReactRouter from 'router/skin/react/components/router';
 
-reactLayout.parse(layout);
+ReactDOM.render(
+  <BrowserRouter>
+    <Switch children={ routes.map((route, index) => (
+        <Route exact path={route} render={(props) => (<ReactRouter routeProps={props} route={route} />)} key={index} />
+      ))} />
+  </BrowserRouter>,
+  document.getElementById('Neon')
+);

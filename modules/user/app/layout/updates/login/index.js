@@ -5,8 +5,8 @@ module.exports = {
       {
         "@addChildBlock": {
           "name": "login",
-          "type": "html",
-          "template": "user/main/content/login.html",
+          "component": "user/skin/react/components/login",
+          "reactTemplate": "user/skin/react/templates/login",
           "children": []
         }
       }
