@@ -65,19 +65,24 @@ module.exports.init = function(sequelize){
 
   // Setup rest API for model
   options = {
-    endpoints: ['id'],
+    getEndpoints: ['id'],
     listDefaults: {
       limit: 10,
       sortby: 'createdAt',
       order: 'desc'
     },
-    exclude: ['password','createdAt','updatedAt']
+    exclude: ['createdAt','updatedAt'],
+    restrictions: {
+      LIST: false,
+      CREATE: {type: 'isLoggedIn', result: false},
+      UPDATE: {id: {type: 'isSelf', result: true}}
+    }
   }
   restifyModel(User, options, Neon.app);
 
   // Set model associations
   User.associate = function(models){
-    User.hasMany(models.post, {as: 'author'});
+    User.hasMany(models.post, {as: 'author', foreignKey: 'authorId'});
     User.hasMany(models.comment);
 
     User.beforeCreate(function(instance) {

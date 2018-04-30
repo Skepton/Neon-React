@@ -5,14 +5,13 @@ module.exports = {
       {
         "@addChildBlock": {
           "name": "postCenter",
-          "type": "html",
-          "template": "admin/main/content/postCenter.html",
+          "component": "admin/skin/react/components/postCenter",
+          "reactTemplate": "admin/skin/react/templates/postCenter",
           "children": [
             {
               "name": "posts",
-              "type": "html",
-              "model": "admin/postCenter/list",
-              "template": "admin/main/content/postCenter/list.html",
+              "component": "admin/skin/react/components/postCenter/posts",
+              "reactTemplate": "admin/skin/react/templates/postCenter/posts",
               "children": []
             }
           ]

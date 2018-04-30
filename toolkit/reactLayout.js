@@ -22,7 +22,7 @@ module.exports = {
       class: parentComponent,
       template: parentTemplate,
       children: childrenComponents,
-      block: block
+      layout: block
     }
   }
 }

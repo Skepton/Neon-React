@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import reactLayout from 'reactLayout';
 import hash from 'object-hash';
 import Zepto from 'zepto';
+import routeStore from 'router/skin/react/helpers/routeStore';
 import redirectDispatcher from 'router/skin/react/helpers/redirectDispatcher';
 
 class reactRouter extends React.Component {
@@ -22,6 +23,7 @@ class reactRouter extends React.Component {
     self.redirectDispatcherToken = redirectDispatcher.register(function(data){
         self.props.routeProps.history.push(data);
     });
+    routeStore.setDispatcher.dispatch({path: this.state.path, params: this.state.params});
   }
 
   digestLayout(layoutObject) {
@@ -85,7 +87,7 @@ class reactRouter extends React.Component {
   }
 
   render() {
-    return <this.state.parsedLayout.class block={this.state.parsedLayout.block} template={this.state.parsedLayout.template} children={this.state.parsedLayout.children} key={this.state.layoutHash}/>;
+    return <this.state.parsedLayout.class layout={this.state.parsedLayout.block} template={this.state.parsedLayout.template} children={this.state.parsedLayout.children} key={this.state.layoutHash}/>;
   }
 }
 

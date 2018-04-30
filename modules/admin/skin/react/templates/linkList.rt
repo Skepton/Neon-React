@@ -1,0 +1,3 @@
+<ul class="navigation-list top">
+  <li class="navigation-list__item" rt-repeat="child in this.children" key="{child.name}">{child.component}</li>
+</ul>

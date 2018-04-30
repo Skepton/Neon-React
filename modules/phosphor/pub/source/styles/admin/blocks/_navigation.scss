@@ -1,7 +1,7 @@
 $navigation--background-color: #ffffff !default;
-$navigation__logo--background-color: #292a51 !default;
+$navigation__logo--background-color: $neon__color--primary !default;
 
-#neon.admin {
+.admin-wrapper {
   #header {
     display: flex;
     flex-direction: column;

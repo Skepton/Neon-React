@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Static Content -->
-    <link rel="stylesheet" type="text/css" href="{% urlhelper "{{static}}/styles.css" %}{% endurlhelper %}" />
+    <link rel="stylesheet" type="text/css" href="{% urlhelper "{{static}}/admin.css" %}{% endurlhelper %}" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Jura:400,600,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   </head>
   <body class="main">
-    <div id="Neon"></div>
+    <div id="Neon" class="admin"></div>
     <script>var layout = {{layout}}; var routes = {{routes}};</script>
     <script type="text/javascript" src="{% urlhelper "{{static}}/bundle.js" %}{% endurlhelper %}"></script>
   </body>

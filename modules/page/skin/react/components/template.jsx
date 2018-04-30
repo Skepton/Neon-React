@@ -5,7 +5,7 @@ class templateComponent extends React.Component {
 
   constructor(props){
     super(props);
-    this.block = props.block;
+    this.layout = props.layout;
     this.setTemplate(props.template);
     this.prepareChildren(props.children);
   }
@@ -19,7 +19,7 @@ class templateComponent extends React.Component {
     self.children = [];
     if(children && children.length > 0){
       children.forEach(function(child){
-        self.children[child.block.name] = <child.class block={child.block} template={child.template} children={child.children} />
+        self.children[child.layout.name] = <child.class layout={child.layout} template={child.template} children={child.children} />
       });
     }
   }

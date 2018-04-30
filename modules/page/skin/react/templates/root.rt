@@ -1,4 +1,6 @@
-<div className="page-wrapper">
+<div class="admin-wrapper">
   {this.children.header}
-  {this.children.content}
+  <main class="main-content">
+    {this.children.content}
+  </main>
 </div>

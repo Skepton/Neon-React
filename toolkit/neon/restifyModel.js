@@ -21,14 +21,38 @@ function parseListParams(params){
   }
 }
 
+function handleRequestRestriction(request, restriction){
+  var conditionalType = restriction.type;
+  var conditionalRequiredResult = restriction.result;
+
+  return restrictionPromise = new Promise(function(resolve, reject){
+    var conditionalFunction = Neon.getFile(path.join('app/helper/conditional',conditionalType), false);
+
+    if(conditionalFunction){
+      var conditionalResult = conditionalFunction(request);
+
+      if(conditionalResult === conditionalRequiredResult){
+        resolve();
+      } else {
+        reject('Conditional mismatch');
+      }
+
+    } else {
+      reject('No conditional with name: ' + conditionalType);
+    }
+
+  });
+}
+
 module.exports = function(model, options, app){
   var apiPrefix = Neon.config.apiEndpoint;
   var exclude = options.exclude;
+  var restrictions = options.restrictions;
 
   /*
   ** Setup all GET requests
   */
-  var endpoints = options.endpoints;
+  var endpoints = options.getEndpoints;
   endpoints.forEach(function(endpoint){
 
     // List entries based on attribute endpoints
@@ -56,7 +80,7 @@ module.exports = function(model, options, app){
     model.findAll(listOptions).then(function(data){
       res.json(data);
     }).catch(function(err){
-      res.status(404).send('Invalid URL');
+      res.status(404).send({type: 'error', message: 'Invalid URL'});
     });
   });
 
@@ -64,40 +88,84 @@ module.exports = function(model, options, app){
   ** Setup CREATE new entry
   */
   app.post(path.join(Neon.config.apiEndpoint, model.name), function(req, res){
-    var params = req.body;
-    var data = {
-      "admin": false,
-      "username": params.username,
-      "password": params.password,
-      "about": ""
-    }
-    model.create(data).then(function(user){
-      res.send('Entry successfully created');
+    handleRequestRestriction(req, restrictions['CREATE']).then(function(){
+      var params = req.body;
+      model.create(params).then(function(data){
+        if(typeof model.onRestifyCreateAssociation === 'function'){
+          model.onRestifyCreateAssociation(data, req.user).then(function(data){
+            res.send({type: 'success', message: 'Entry successfully created', data: data});
+          });
+        } else {
+          res.send({type: 'success', message: 'Entry successfully created', data: data});
+        }
+      }).catch(function(err){
+        console.log(err);
+        res.status(404).send({type: 'error', message: 'Could not create new entry'});
+      });
     }).catch(function(err){
-      res.status(404).send('Could not create new entry');
+      console.log(err);
+      res.status(401).send({type: 'error', message: 'Unauthorized request'});
     });
   });
 
   /*
-  ** Setup UPDATE for existing entries
+  ** Setup DELETE new entry
   */
-  var endpoints = options.endpoints;
+  var endpoints = options.getEndpoints;
+  endpoints.forEach(function(endpoint){
+    app.delete(path.join(Neon.config.apiEndpoint, model.name, endpoint, ':'+endpoint), function(req, res){
+      handleRequestRestriction(req, restrictions['DELETE'][endpoint]).then(function(){
+        var params = req.params;
+        var where = {};
+        where[endpoint] = params[endpoint];
+
+        model.findOne({where: where}).then(function(entry){
+          if(entry){
+            entry.destroy().then(function(){
+              res.send({type: 'success', message: 'Entry successfully deleted', data: {}});
+            });
+          } else {
+            res.status(404).send({type: 'error', message: 'No entry found'});
+          }
+        }).catch(function(err){
+          console.log(err);
+          res.status(404).send({type: 'error', message: 'Could not delete entry'});
+        });
+
+      }).catch(function(err){
+        console.log(err);
+        res.status(401).send({type: 'error', message: 'Unauthorized request'});
+      });
+
+    });
+  });
+
+  /*
+  ** Setup PUT (UPDATE) for existing entries
+  */
+  var endpoints = options.getEndpoints;
   endpoints.forEach(function(endpoint){
     app.put(path.join(Neon.config.apiEndpoint, model.name, endpoint, ':'+endpoint), function(req, res){
-      var params = req.params;
-      var where = {};
-      where[endpoint] = params[endpoint];
-      var body = req.body;
-      model.findOne({where: where, attributes: {exclude: exclude}}).then(function(entry){
-        if(entry){
-          entry.update(body).then(function(){
-            res.send('Entry successfully updated');
-          }).catch(function(err){
-            res.status(404).send('Could not update entry');
-          });
-        } else {
-          res.status(404).send('Entry does not exist');
-        }
+      handleRequestRestriction(req, restrictions['UPDATE'][endpoint]).then(function(){
+        var params = req.params;
+        var where = {};
+        where[endpoint] = params[endpoint];
+        var body = req.body;
+        model.findOne({where: where, attributes: {exclude: exclude}}).then(function(entry){
+          if(entry){
+            entry.update(body).then(function(data){
+              res.send({type: 'success', message: 'Entry successfully updated', data: data});
+            }).catch(function(err){
+              console.log(err);
+              res.status(404).send({type: 'error', message: 'Could not update entry'});
+            });
+          } else {
+            res.status(404).send({type: 'error', message: 'Entry does not exist'});
+          }
+        });
+      }).catch(function(err){
+        console.log(err);
+        res.status(401).send({type: 'error', message: 'Unauthorized request'});
       });
     });
   });

@@ -5,17 +5,9 @@ module.exports = {
       {
         "@addChildBlock": {
           "name": "composer",
-          "type": "html",
-          "model": "admin/composer",
-          "template": "admin/main/content/composer.html",
-          "children": [
-            {
-              "name": "composerPreviewTemplate",
-              "type": "html",
-              "template": "admin/main/content/composer/preview.html",
-              "children": []
-            }
-          ]
+          "component": "admin/skin/react/components/composer",
+          "reactTemplate": "admin/skin/react/templates/composer",
+          "children": []
         }
       }
     ]

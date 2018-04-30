@@ -1,7 +1,8 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
-var autoprefixer = require('gulp-autoprefixer');
+// var postcss = require('gulp-postcss');
+// var autoprefixer = require('autoprefixer');
 
 var fs = require('fs');
 var path = require('path');
@@ -29,11 +30,13 @@ gulp.task('scss', function(){
   gulp.src(adminSource)
     .pipe(concat(adminDestinationFile))
     .pipe(sass().on('error', sass.logError))
+    // .pipe(postcss([ autoprefixer() ]))
     .pipe(gulp.dest(destinationFolder));
 
   return gulp.src(frontendSource)
     .pipe(concat(frontendDestinationFile))
     .pipe(sass().on('error', sass.logError))
+    // .pipe(postcss([ autoprefixer() ]))
     .pipe(gulp.dest(destinationFolder));
 });
 

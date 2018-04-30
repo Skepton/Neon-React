@@ -10,3 +10,6 @@
 @import './blocks/post-center',
         './blocks/composer',
         './blocks/categorizer';
+
+//Composer Widgets Specific
+@import './blocks/composerWidgets/addWidget';

@@ -5,8 +5,8 @@ module.exports = {
       {
         "@addChildBlock": {
           "name": "register",
-          "type": "html",
-          "template": "user/main/content/register.html",
+          "component": "user/skin/react/components/register",
+          "reactTemplate": "user/skin/react/templates/register",
           "children": []
         }
       }

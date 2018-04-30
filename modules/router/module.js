@@ -289,7 +289,7 @@ class Neon_router extends Neon_abstract {
   conditional(conditionalType){
     var conditionalFunction = Neon.getFile(path.join('app/helper/conditional',conditionalType), false);
     if(conditionalFunction){
-      return conditionalFunction();
+      return conditionalFunction(context.get('request'));
     } else {
       return false;
     }

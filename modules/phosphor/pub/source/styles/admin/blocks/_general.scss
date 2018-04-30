@@ -8,7 +8,7 @@ button {
   @include button--setup();
 }
 
-#neon.admin {
+.admin-wrapper {
   font-size: $general--font-size;
   background-color: $general--background-color;
   font-family: $general--font-family;

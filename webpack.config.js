@@ -1,5 +1,6 @@
 // webpack.config.js
 var glob = require('webpack-glob-entries');
+var webpack = require('webpack');
 var path = require("path");
 var resolveModules = [path.resolve(__dirname, 'modules/'), path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'toolkit')];
 
@@ -20,6 +21,12 @@ module.exports = {
     ignored: '/node_modules/',
     poll: true
   },
+  plugins: [
+    new webpack.DefinePlugin({
+             'process.env.NODE_ENV': '"production"'
+    }),
+    //new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ],
   module: {
     loaders: [{
         test: /\.rt$/,
@@ -31,6 +38,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
+          plugins: ['lodash'],
           presets: ['es2015', 'react', 'stage-2']
         }
       },

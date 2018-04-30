@@ -1,56 +1,57 @@
 module.exports = {
   "name": "root",
-  "type": "html",
+  "component": "page/skin/react/components/template",
   "rootTemplate": "admin/main.html",
-  "output": true,
+  "reactTemplate": "page/skin/react/templates/root",
   "children": [
     {
-        "name":"head",
-        "template": "admin/main/head.html",
-        "children": [
-          {
-            "name":"headContent",
-            "children": []
-          }
-        ]
-    },
-    {
       "name": "header",
-      "template": "admin/main/header.html",
+      "component": "page/skin/react/components/header",
+      "reactTemplate": "admin/skin/react/templates/header",
       "children": [
         {
-          "name": "headerLinks",
+          "name": "adminLinks",
+          "component": "admin/skin/react/components/linkList",
+          "reactTemplate": "admin/skin/react/templates/linkList",
           "children": [
             {
-              "name": "adminHeaderLinks",
-              "template": "admin/main/header/headerLinks.html",
-              "links": [
-                {
-                  "link": "/admin",
-                  "class": "dashboard",
-                  "title": "Dashboard"
-                },
-                {
-                  "link": "/admin/settings",
-                  "class": "settings",
-                  "title": "Settings",
-                  "links": [
-                    {
-                      "link": "/admin/settings/categorizer",
-                      "class": "categorizer",
-                      "title": "Categories"
-                    }
-                  ]
-                }
-              ],
-              "children": []
+              "name": "adminHomeLink",
+              "component": "admin/skin/react/components/linkList",
+              "reactTemplate": "admin/skin/react/templates/linkListItem",
+              "children": [],
+              "data": {
+                "link": "/admin",
+                "label": "Dashboard"
+              }
+            },
+            {
+              "name": "postsLink",
+              "component": "admin/skin/react/components/linkList",
+              "reactTemplate": "admin/skin/react/templates/linkListItem",
+              "children": [],
+              "data": {
+                "link": "/admin/posts",
+                "label": "Posts"
+              }
+            },
+            {
+              "name": "settingsLink",
+              "component": "admin/skin/react/components/linkList",
+              "reactTemplate": "admin/skin/react/templates/linkListItem",
+              "children": [],
+              "data": {
+                "link": "/admin/settings",
+                "label": "Settings"
+              }
             }
           ]
         }
       ]
     },
     {
-      "name":"content",
+      "name": "content",
+      "component": "page/skin/react/components/list",
+      "reactTemplate": "page/skin/react/templates/list",
       "children": []
     }
   ]

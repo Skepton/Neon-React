@@ -1,0 +1,1 @@
+<div class="add-widget" onClick="{this.props.onClick}"><i class="material-icons">add_box</i></div>

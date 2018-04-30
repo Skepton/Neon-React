@@ -1,0 +1,1 @@
+<textarea onInput={this.onUpdate.bind(this)} placeholder="{this.state.placeholder}">{this.state.data.text}</textarea>
