@@ -1,8 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import template from 'admin/skin/react/templates/composer/toolbox.rt';
+import templateComponent from 'page/skin/react/components/template';
+import template from 'admin/skin/react/templates/composer/toolbox';
 
-class toolBox extends React.Component {
+class toolBox extends templateComponent {
 
   constructor(props){
     super(props);
@@ -11,10 +10,6 @@ class toolBox extends React.Component {
 
   setTemplate(template){
     this.template = template;
-  }
-
-  render() {
-    return this.template.call(this);
   }
 
 }

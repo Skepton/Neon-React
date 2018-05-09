@@ -1,7 +1,0 @@
-<rt-import name="Link" from="react-router-dom" />
-<div class="link-wrapper">
-  <Link to="{this.layout.data.link}">{this.layout.data.label}</Link>
-  <ul class="navigation-list">
-    <li class="navigation-list__item" rt-repeat="child in this.children" key="{child.name}">{child.component}</li>
-  </ul>
-</div>

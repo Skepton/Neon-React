@@ -1,6 +1,0 @@
-<header id="header" className="header">
-  <div className="contentWidth">
-    <a className="header-logo" href="/"><img src="{this.logoSrc}" /></a>
-    <ul className="header-links">{this.children.headerLinks}</ul>
-  </div>
-</header>

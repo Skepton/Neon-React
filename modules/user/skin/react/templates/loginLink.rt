@@ -1,5 +1,0 @@
-<rt-import name="Link" from="react-router-dom" />
-<li>
-  <Link to="/login" rt-if="!this.state.loggedIn">Log in</Link>
-  <form action="/logout" method="post" rt-if="this.state.loggedIn"><button type="submit">Log out</button></form>
-</li>

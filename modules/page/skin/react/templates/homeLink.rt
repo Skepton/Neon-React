@@ -1,4 +1,0 @@
-<rt-import name="Link" from="react-router-dom" />
-<li>
-  <Link to="/">Home</Link>
-</li>

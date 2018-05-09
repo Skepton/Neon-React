@@ -1,5 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import templateComponent from 'page/skin/react/components/template';
 import userStore from 'user/skin/react/helpers/userStore';
 
@@ -18,10 +16,6 @@ class NeonLoginLink extends templateComponent {
 
   componentWillUnmount(){
     userStore.getDispatcher.unregister(this.userStoreToken);
-  }
-
-  render() {
-    return this.template.call(this);
   }
 
 }

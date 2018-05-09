@@ -1,6 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 module.exports = {
   parse: function(layout){
     var self = this;
@@ -10,7 +7,7 @@ module.exports = {
     var self = this;
     var children = block.children;
     var parentComponent = require('../modules/'+block.component+'.jsx');
-    var parentTemplate = require('../modules/'+block.reactTemplate+ '.rt').default;
+    var parentTemplate = require('../modules/'+block.reactTemplate+'.jsx');
     var childrenComponents = [];
     if(children && children.length > 0){
       children.forEach(function(child){

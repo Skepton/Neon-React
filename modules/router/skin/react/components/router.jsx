@@ -1,5 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import reactLayout from 'reactLayout';
 import hash from 'object-hash';
 import Zepto from 'zepto';

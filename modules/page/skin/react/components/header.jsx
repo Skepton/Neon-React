@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import templateComponent from 'page/skin/react/components/template.jsx';
+import templateComponent from 'page/skin/react/components/template';
 import logo from '../../images/logo.png';
 
 class NeonHeader extends templateComponent {

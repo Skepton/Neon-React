@@ -1,6 +1,0 @@
-<div class="admin-wrapper">
-  {this.children.header}
-  <main class="main-content">
-    {this.children.content}
-  </main>
-</div>

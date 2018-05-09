@@ -1,4 +1,0 @@
-<rt-import name="Link" from="react-router-dom" />
-<li>
-  <Link to="/register" rt-if="!this.state.loggedIn">Register</Link>
-</li>

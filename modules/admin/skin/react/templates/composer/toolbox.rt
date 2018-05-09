@@ -1,3 +1,0 @@
-<div class="toolBox-wrapper">
-  <i class="material-icons remove" onClick="{this.props.onRemove}">close</i>
-</div>

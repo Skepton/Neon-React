@@ -1,5 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import templateComponent from 'page/skin/react/components/template';
 import Zepto from 'zepto';
 import userStore from 'user/skin/react/helpers/userStore';

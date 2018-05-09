@@ -1,3 +1,0 @@
-<li class="admin-link">
-  <a href="/admin" rt-if="this.state.user.admin">Admin</a>
-</li>

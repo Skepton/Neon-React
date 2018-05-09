@@ -1,16 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import template from 'admin/skin/react/templates/composer/addWidget.rt';
+import templateComponent from 'page/skin/react/components/template';
+import template from 'admin/skin/react/templates/composer/addWidget';
 
-class addWidget extends React.Component {
+class addWidget extends templateComponent {
 
   constructor(props){
     super(props);
     this.template = template;
-  }
-
-  render() {
-    return this.template.call(this);
   }
 
 }

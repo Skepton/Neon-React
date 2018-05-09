@@ -23,22 +23,22 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-             'process.env.NODE_ENV': '"production"'
+      'process.env.NODE_ENV': '"production"'
     }),
-    //new webpack.optimize.UglifyJsPlugin({minimize: true})
+    new webpack.ProvidePlugin({
+      'React': 'react'
+    }),
+    new webpack.ProvidePlugin({
+      'ReactDOM': 'react-dom'
+    })
   ],
   module: {
-    loaders: [{
-        test: /\.rt$/,
-        loaders: ["babel-loader?presets[]=es2015", "react-templates-loader?modules=es6"],
-        exclude: /node_modules/,
-      },
+    loaders: [
       {
         test: /.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          plugins: ['lodash'],
           presets: ['es2015', 'react', 'stage-2']
         }
       },

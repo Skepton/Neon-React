@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import editorTemplate from 'admin/skin/react/templates/composer/textWidget-editor.rt';
+import editorTemplate from 'admin/skin/react/templates/composer/textWidget-editor';
 
 class textWidget extends React.Component {
 
@@ -28,7 +26,7 @@ class textWidget extends React.Component {
   }
 
   render() {
-    return this.editorTemplate.call(this);
+    return this.editorTemplate(this);
   }
 
 }
