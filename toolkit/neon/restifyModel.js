@@ -151,6 +151,7 @@ module.exports = function(model, options, app){
         var where = {};
         where[endpoint] = params[endpoint];
         var body = req.body;
+
         model.findOne({where: where, attributes: {exclude: exclude}}).then(function(entry){
           if(entry){
             entry.update(body).then(function(data){

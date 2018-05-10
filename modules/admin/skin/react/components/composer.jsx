@@ -79,7 +79,7 @@ class NeonComposer extends templateComponent {
       var stateHash = hash({data: postBodyWidget.data, key: key});
 
       renderedComposerList.push(
-        <div class="widget-wrapper--inner">
+        <div className="widget-wrapper--inner">
           <PostBodyWidgetType data={postBodyWidget.data} preview="false" sendWidgetUpdates={self.handleWidgetUpdates.bind(self)} index={key} key={stateHash}/>
           <Toolbox onRemove={self.removeWidget.bind(self, key)} index={key} key={key}/>
         </div>
@@ -112,9 +112,9 @@ class NeonComposer extends templateComponent {
   */
 
   handleHeadlineUpdate(e){
-    var inputValue = e.target;
+    var inputValue = e.target.value;
     var post = JSON.parse(JSON.stringify(this.state.post));
-    console.log(inputValue);
+    post.headline = inputValue;
 
     this.setState({post: post});
   }
@@ -129,6 +129,7 @@ class NeonComposer extends templateComponent {
     var self = this;
     var params = this.state.params;
     if(params.hashid){
+
       $.ajax({
         url: '/api/post/hashid/'+params.hashid,
         type: 'GET',
@@ -155,11 +156,7 @@ class NeonComposer extends templateComponent {
     var self = this;
     var params = this.state.params;
     if(params.hashid){
-
-      var post = {
-        body: JSON.stringify(this.state.post.body)
-      }
-
+      var post = this.state.post;
       $.ajax({
         url: '/api/post/hashid/'+params.hashid,
         type: 'PUT',
@@ -222,7 +219,7 @@ class NeonComposer extends templateComponent {
   }
 
   render() {
-    return this.template.call(this);
+    return this.template(this);
   }
 
 }

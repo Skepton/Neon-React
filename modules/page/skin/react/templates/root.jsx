@@ -1,7 +1,7 @@
 module.exports = (component) =>
-<div class="admin-wrapper">
+<div className="admin-wrapper">
   {component.children.header}
-  <main class="main-content">
+  <main className="main-content">
     {component.children.content}
   </main>
 </div>

@@ -1,4 +1,4 @@
 module.exports = (component) =>
-<li class="admin-link">
-  <a href="/admin" rt-if="component.state.user.admin">Admin</a>
+<li className="admin-link">
+  {component.state.user.admin ? <a href="/admin">Admin</a> : ''}
 </li>

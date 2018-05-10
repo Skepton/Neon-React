@@ -1,11 +1,11 @@
 module.exports = (component) =>
-<div class="post-center">
-  <div class="post-center__bar">
-    <form role="form" class="new-post" onSubmit={component.newPost}>
+<div className="post-center">
+  <div className="post-center__bar">
+    <form role="form" className="new-post" onSubmit={component.newPost}>
         <button type="submit" value="newPost">New Post</button>
     </form>
   </div>
-  <div class="post-center__content">
+  <div className="post-center__content">
     {component.children.posts}
   </div>
 </div>
