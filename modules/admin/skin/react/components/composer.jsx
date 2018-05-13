@@ -110,11 +110,13 @@ class NeonComposer extends templateComponent {
   ** Handle Headline update
   **
   */
-
-  handleHeadlineUpdate(e){
-    var inputValue = e.target.value;
+  handleInputUpdate(event){
+    var targetElement = event.target;
+    var targetName = targetElement.getAttribute('name');
+    var inputValue = targetElement.value;
     var post = JSON.parse(JSON.stringify(this.state.post));
-    post.headline = inputValue;
+
+    post[targetName] = inputValue;
 
     this.setState({post: post});
   }
@@ -124,7 +126,6 @@ class NeonComposer extends templateComponent {
   ** Handle Save, Delete and inital Loading of Post Data
   **
   */
-
   getPost(){
     var self = this;
     var params = this.state.params;
@@ -134,9 +135,10 @@ class NeonComposer extends templateComponent {
         url: '/api/post/hashid/'+params.hashid,
         type: 'GET',
         dataType: 'json',
-        success: function(response){
-          var post = response;
-          post.body = JSON.parse(post.body) || [];
+        success: function(post){
+          if(!post.body){
+            post.body = [];
+          }
           self.setState({post: post});
           self.renderToComposer(post.body);
         },
@@ -156,12 +158,20 @@ class NeonComposer extends templateComponent {
     var self = this;
     var params = this.state.params;
     if(params.hashid){
-      var post = this.state.post;
+      var post = {
+        body: this.state.post.body,
+        headline: this.state.post.headline,
+        header: this.state.post.header,
+        slug: this.state.post.slug,
+        source: this.state.post.source,
+        tags: this.state.post.tags
+      }
+
       $.ajax({
         url: '/api/post/hashid/'+params.hashid,
         type: 'PUT',
-        data: post,
-        dataType: 'json',
+        data: JSON.stringify(post),
+        contentType: 'application/json',
         success: function(response){
           console.log('Save Successful!');
         },
@@ -183,7 +193,6 @@ class NeonComposer extends templateComponent {
         data: this.state.composer,
         dataType: 'json',
         success: function(){
-          console.log('Delete Successful!');
           redirectDispatcher.dispatch('/admin');
         },
         error: function(err){
@@ -198,7 +207,6 @@ class NeonComposer extends templateComponent {
   ** React Component functions
   **
   */
-
   componentWillMount(){
     var self = this;
     this.routeDispatcherToken = routeStore.getDispatcher.register(function(data){
@@ -216,10 +224,6 @@ class NeonComposer extends templateComponent {
     // Remove event handlers
     this.savePost = false;
     this.updateComposer = false;
-  }
-
-  render() {
-    return this.template(this);
   }
 
 }

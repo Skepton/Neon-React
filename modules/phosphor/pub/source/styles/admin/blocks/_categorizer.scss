@@ -1,77 +1,41 @@
 .categorizer {
-  & &__bar {
-    @include info-bar();
-  }
-  & &__content {
-    .category-tree {
+  &  &__root-form,
+  &  &__child-form {
+    background-color: white;
+    margin-bottom: 2rem;
+    padding: 1rem;
+
+    form {
       display: flex;
-      flex-direction: column;
-      padding-left: 1.5rem;
-      &:not(.empty) {
-        margin-bottom: 1rem;
-        > .category-tree__item {
-          &--non-category {
-            margin-bottom: 1rem;
-          }
-        }
+      flex-wrap: wrap;
+      margin-top: 1rem;
+
+      .input-box {
+        width: 100%;
       }
-      &__item {
-        cursor: pointer;
-        .title-wrapper {
-          background-color: #fff;
-        }
-        .title-wrapper {
-          display: flex;
-          align-items: center;
-          min-width: 20%;
-          padding: 0.5rem;
-          .title {
-            font-size: 1rem;
-            line-height: 25px;
-          }
-          .indicator {
-            @include mdl-icon($icon:'\E315', $position: before, $font-size: 16px, $vertical-align: middle);
-          }
-        }
-        &--non-category {
-          a {
-            display: flex;
-            align-items: center;
-            padding: 0.5rem;
-            color: black;
-            line-height: 14px;
-            font-size: 0.8rem;
-            font-style: italic;
-            @include mdl-icon($icon:'\E145', $position: before, $font-size: 16px, $vertical-align: middle);
-            &:before {
-              padding: 0.1rem;
-              margin-right: 0.5rem;
-              color: white;
-              background-color: $button--background-color;
-            }
-            span {
-              margin-left: 0.25rem;
-              font-weight: bold;
-            }
-            &:visited {
-              color: inherit;
-            }
-          }
-        }
-        &.expanded {
-          border: none;
-          > .title-wrapper {
-            > .indicator:before {
-              content: "\E313";
-            }
-          }
-        }
-        &.collapsed > .category-tree {
-          display: none;
-        }
+
+      button {
+        margin: 1rem 0 0 auto;
       }
-      &.top {
-        padding-left: 0;
+    }
+  }
+  & .category-tree {
+    &__item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem;
+      margin: 0 0 0.5rem 0;
+      background-color: white;
+      .info-wrapper {
+        display: flex;
+        flex-direction: column;
+        .title {
+          font-size: 1.25rem;
+          font-weight: bold;
+        }
+        .slug {
+          color: #888;
+        }
       }
     }
   }

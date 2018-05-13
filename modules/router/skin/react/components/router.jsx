@@ -85,7 +85,8 @@ class reactRouter extends React.Component {
   }
 
   render() {
-    return <this.state.parsedLayout.class layout={this.state.parsedLayout.block} template={this.state.parsedLayout.template} children={this.state.parsedLayout.children} key={this.state.layoutHash}/>;
+    var state = this.state;
+    return <state.parsedLayout.class layout={state.parsedLayout.block} template={state.parsedLayout.template} children={state.parsedLayout.children} key={state.layoutHash}/>;
   }
 }
 

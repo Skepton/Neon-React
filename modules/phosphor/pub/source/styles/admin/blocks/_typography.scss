@@ -1,0 +1,41 @@
+$typography__baseline: 14px;
+
+body {
+  font-size: $typography__baseline;
+}
+
+h1 {
+  margin-bottom: $typography__baseline * 2;
+  font-size: $typography__baseline * 2.5;
+  font-weight: bold;
+}
+
+h2 {
+  margin-bottom: $typography__baseline * 1.8;
+  font-size: $typography__baseline * 2.2;
+  font-weight: bold;
+}
+
+h3 {
+  margin-bottom: $typography__baseline * 1.6;
+  font-size: $typography__baseline * 2;
+  font-weight: bold;
+}
+
+h4 {
+  margin-bottom: $typography__baseline * 1.4;
+  font-size: $typography__baseline * 1.75;
+  font-weight: bold;
+}
+
+h5 {
+  margin-bottom: $typography__baseline * 1.2;
+  font-size: $typography__baseline * 1.5;
+  font-weight: bold;
+}
+
+h6 {
+  margin-bottom: $typography__baseline * 1;
+  font-size: $typography__baseline * 1.2;
+  font-weight: bold;
+}

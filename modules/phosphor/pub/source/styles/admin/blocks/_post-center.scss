@@ -1,10 +1,4 @@
 .post-center {
-  & &__bar {
-    @include info-bar();
-  }
-  & &__content {
-    padding: 1rem 2rem;
-  }
   & &__list {
     background-color: white;
     &--item {

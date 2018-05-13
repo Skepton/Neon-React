@@ -11,7 +11,7 @@ module.exports = (component) =>
       <div className="input-box title">
         <div className="input-box__container">
           <label htmlFor="headline">Title</label>
-          <input id="headline" type="text" className="input-div" name="headline" placeholder="What is it about?" required onInput={component.handleHeadlineUpdate.bind(component)} value={component.state.post.headline} />
+          <input id="headline" type="text" className="input-div" name="headline" placeholder="What is it about?" required onInput={component.handleInputUpdate.bind(component)} value={component.state.post.headline} />
         </div>
       </div>
 
@@ -32,12 +32,12 @@ module.exports = (component) =>
       <div className="input-box misc">
         <div className="input-box__container input-box__container--half">
           <label htmlFor="source">Source</label>
-          <input id="source" type="text" name="source" value={component.state.post.source} placeholder="Story credits goes to" autoComplete="off"/>
+          <input id="source" type="text" name="source" value={component.state.post.source} placeholder="Story credits goes to" autoComplete="off" onInput={component.handleInputUpdate.bind(component)}/>
         </div>
 
         <div className="input-box__container input-box__container--half">
           <label htmlFor="tags">Tags</label>
-          <input id="tags" type="text" name="tags" value={component.state.post.tags} placeholder="Tags" autoComplete="off"/>
+          <input id="tags" type="text" name="tags" value={component.state.post.tags} placeholder="Tags" autoComplete="off" onInput={component.handleInputUpdate.bind(component)}/>
         </div>
       </div>
 

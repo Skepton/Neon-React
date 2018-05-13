@@ -24,7 +24,7 @@ module.exports.init = function(sequelize){
       type: Sequelize.STRING
     },
     body: {
-      type: Sequelize.TEXT
+      type: Sequelize.JSON
     },
     published: {
       type: Sequelize.BOOLEAN,
@@ -51,7 +51,7 @@ module.exports.init = function(sequelize){
     }
   });
 
-  // Setup rest API for model
+  // Rest API options for model
   options = {
     getEndpoints: ['id','slug','hashid'],
     listDefaults: {
@@ -76,16 +76,20 @@ module.exports.init = function(sequelize){
     }
   }
 
-  Post.onRestifyCreateAssociation = function(instance, association){
-    return instance.setAuthor(association);
+  Post.onRestifyCreateAssociation = function(instance, currentUser, params){
+    return instance.setAuthor(currentUser);
   }
 
   restifyModel(Post, options, Neon.app);
 
   // Set model associations
   Post.associate = function(models){
-    Post.belongsTo(models.user, {as: 'author', foreignKey: 'authorId'});
-    Post.belongsTo(models.category, {as: 'category'});
+    if(models.user) {
+      Post.belongsTo(models.user, {as: 'author', foreignKey: 'authorId'});
+    }
+    if(models.category){
+      Post.belongsTo(models.category, {as: 'category'});
+    }
 
     Post.afterCreate(function(instance){
       var hash = crypto.createHash('MD5').update(instance.id.toString()).digest('hex');

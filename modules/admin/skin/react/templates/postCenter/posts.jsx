@@ -10,7 +10,7 @@ module.exports = (component) =>
       }
 
       { post.body ?
-        <p className="body truncate">{post.body}</p> :
+        <p className="body truncate">Not yet showing excerpt</p> :
         <p className="body truncate">This could be the start of the article</p>
       }
 

@@ -64,7 +64,6 @@ module.exports = function(model, options, app){
         res.json(data);
       });
     });
-
   });
 
   // List all entries
@@ -92,7 +91,7 @@ module.exports = function(model, options, app){
       var params = req.body;
       model.create(params).then(function(data){
         if(typeof model.onRestifyCreateAssociation === 'function'){
-          model.onRestifyCreateAssociation(data, req.user).then(function(data){
+          model.onRestifyCreateAssociation(data, req.user, params).then(function(data){
             res.send({type: 'success', message: 'Entry successfully created', data: data});
           });
         } else {
@@ -157,7 +156,6 @@ module.exports = function(model, options, app){
             entry.update(body).then(function(data){
               res.send({type: 'success', message: 'Entry successfully updated', data: data});
             }).catch(function(err){
-              console.log(err);
               res.status(404).send({type: 'error', message: 'Could not update entry'});
             });
           } else {
