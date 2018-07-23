@@ -1,6 +1,6 @@
 module.exports = (component) =>
-<div className="list">
-  {component.children.map((child) =>
-    <div className="list--item" key={child.name}>{child.component}</div>
+<div className="list__wrapper">
+  {component.props.children.map((child) =>
+    <child.class layout={child.layout} template={child.template} children={child.children} />
   )}
 </div>

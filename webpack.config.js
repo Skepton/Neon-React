@@ -2,7 +2,7 @@
 var glob = require('webpack-glob-entries');
 var webpack = require('webpack');
 var path = require("path");
-var resolveModules = [path.resolve(__dirname, 'modules/'), path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'toolkit')];
+var resolveModules = [path.resolve(__dirname, 'modules/'), path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'neon/toolkit')];
 
 module.exports = {
   entry: glob('./modules/*/skin/react/module.jsx'),

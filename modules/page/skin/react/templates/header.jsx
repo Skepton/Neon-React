@@ -1,7 +1,17 @@
+import {Link} from 'react-router-dom'
+
 module.exports = (component) =>
-<header id="header" className="header">
-  <div className="contentWidth">
-    <a className="header-logo" href="/"><img src={component.logoSrc} /></a>
-    <ul className="header-links">{component.children.headerLinks}</ul>
+<header id="header" className="header__wrapper">
+  <div className="header__content">
+    <Link to="/" className="header__logo"><span className="logo-text"><span className="capital">N</span><span className="subhead">eon</span></span></Link>
+    {component.children.categoryLinks}
+    <nav className="header__links"
+         onMouseEnter={component.openLinksMenu.bind(component)}
+         onMouseLeave={component.closeLinksMenu.bind(component)}>
+      <div class={"button__menu" + (component.state.linksMenuOpen ? ' button__menu--open' : ' button__menu--closed')} >
+        <button class="button">My Account</button>
+        {component.children.headerLinks}
+      </div>
+    </nav>
   </div>
 </header>

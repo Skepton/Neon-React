@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize'),
     path = require('path'),
     async = require('async'),
-    restifyModel = require(path.join(appRoot,'toolkit/neon/restifyModel.js')),
+    restifyModel = require(path.join(appRoot,'neon/toolkit/restifyModel.js')),
     hashPassword = Neon.getFile('app/helper/handlePassword').hashPassword;
 
 function slugify(str) {

@@ -7,7 +7,14 @@ module.exports = {
           "name": "composer",
           "component": "admin/skin/react/components/composer",
           "reactTemplate": "admin/skin/react/templates/composer",
-          "children": []
+          "children": [
+            {
+              "name": "composerAdditional",
+              "component": "page/skin/react/components/list",
+              "reactTemplate": "page/skin/react/templates/list",
+              "children": []
+            }
+          ]
         }
       }
     ]

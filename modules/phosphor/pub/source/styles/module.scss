@@ -1,3 +1,6 @@
-body {
-  background-color: $background-color;
-}
+// General Blocks
+@import './blocks/page-layout',
+        './blocks/general',
+        './blocks/navigation';
+
+@import './components/button';

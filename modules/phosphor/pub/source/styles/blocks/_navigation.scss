@@ -1,0 +1,114 @@
+$navigation--background-color: #ffffff !default;
+$navigation__logo--color: $neon__color--primary !default;
+
+.header {
+  &__wrapper {
+    padding: 0.75rem;
+  }
+  &__content {
+    display: flex;
+    align-items: center;
+    max-width: $grid--max-width;
+    margin: 0 auto;
+  }
+  &__logo {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    padding: 0;
+    margin: -0.75rem 2rem -0.75rem -0.75rem;
+    border-radius: 0 $general__border-radius $general__border-radius 0;
+    font-family: $general__neon--font-family;
+    span {
+      color: $navigation__logo--color;
+      &.logo-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        & .capital {
+          margin: -7px 0 0;
+          font-size: 3.75rem;
+          line-height: 3rem;
+          text-align: center;
+        }
+        & .subhead {
+          font-size: 1rem;
+          text-align: center;
+          letter-spacing: 3px;
+          text-indent: 3px;
+        }
+      }
+    }
+  }
+  &__links {
+    position: relative;
+    display: flex;
+    margin-left: auto;
+    border: 1px solid transparent;
+  }
+}
+
+.category-links {
+  &__wrapper {
+    display: flex;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    a {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      color: #505050;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    &--open {
+      background-color: white;
+      border-radius: 5px;
+    }
+  }
+
+  &__list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 0.5rem 0;
+    min-width: 100%;
+    border-radius: 0 0 $general__border-radius $general__border-radius;
+    background-color: $navigation--background-color;
+    &--open {
+      display: flex;
+    }
+    > .category-links__item {
+      border-radius: 0;
+      background-color: white;
+      a {
+        padding: 1.25rem 2rem;
+      }
+      &:not(:last-of-type) {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+      }
+      &:first-of-type {
+        border-radius: $general__border-radius $general__border-radius 0 0;
+      }
+      &:last-of-type {
+        border-radius: 0 0 $general__border-radius $general__border-radius;
+      }
+      &--open {
+        background-color: rgba(0,0,0,0.15);
+        box-shadow: none;
+      }
+    }
+  }
+}

@@ -5,10 +5,10 @@ input[type="reset"],
 input[type="button"],
 .button,
 button {
-  @include button--setup();
+  //@include button--setup();
 }
 
-.admin-wrapper {
+.admin__wrapper {
   font-size: $general--font-size;
   background-color: $general--background-color;
   font-family: $general--font-family;

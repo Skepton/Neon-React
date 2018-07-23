@@ -1,4 +1,4 @@
-import reactLayout from 'reactLayout';
+import reactLayout from 'reactLayout.js';
 import hash from 'object-hash';
 import Zepto from 'zepto';
 import routeStore from 'router/skin/react/helpers/routeStore';

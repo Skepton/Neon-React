@@ -41,13 +41,7 @@ module.exports = (component) =>
         </div>
       </div>
 
-      <div className="input-box category">
-        <select name="category">
-          <option value="">No Category</option>
-        </select>
-      </div>
-
-      <p>No categories - please add a category using the <a href="/admin/settings/categorizer">Categorizer</a></p>
+      <div className="composer-form__additional">{component.children.composerAdditional}</div>
     </form>
 
     <div id="composer-preview" className="composer-editor__preview">

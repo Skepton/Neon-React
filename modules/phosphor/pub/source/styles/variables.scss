@@ -1,4 +1,25 @@
-$background-color: red;
-$font-family: "Source Sans Pro", sans-serif;
+// General
+$general--background-color: #ffffff !default;
+$general--font-size: 14px !default;
+$general--font-family: "Roboto", sans-serif !default;
+$general__border-radius: 3px;
+$general__neon--font-family: "Jura", sans-serif !default;
 
-@import './mixins/grid';
+$grid--max-width: 1400px !default;
+
+// Colors
+$neon__color--primary: #292a51;
+
+// -- Informative
+$color__info--notice: #f5eba2;
+$color__info--error: #d63278;
+
+// -- Actions
+$color__action--confirm: #19ab66;
+$color__action--cancel: #e81b54;
+$color__action--neutral: #2da6de;
+
+@import './mixins/reset',
+        './mixins/grid',
+        './mixins/info-bar',
+        './mixins/mdl-icons';

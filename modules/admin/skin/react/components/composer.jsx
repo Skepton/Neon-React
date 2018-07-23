@@ -2,6 +2,8 @@ import templateComponent from 'page/skin/react/components/template';
 import Zepto from 'zepto';
 import hash from 'object-hash';
 import routeStore from 'router/skin/react/helpers/routeStore';
+
+import {getComposerDispatch, setComposerDispatch} from 'admin/skin/react/helpers/composerDispatcher';
 import redirectDispatcher from 'router/skin/react/helpers/redirectDispatcher';
 
 import AddWidget from 'admin/skin/react/components/composer/addWidget';
@@ -63,7 +65,7 @@ class NeonComposer extends templateComponent {
     var post = JSON.parse(JSON.stringify(this.state.post));
     var postBody = post.body;
 
-    console.log(postBody.splice(position, 1));
+    postBody.splice(position, 1);
 
     post.body = postBody;
     this.setState({post: post});
@@ -105,6 +107,10 @@ class NeonComposer extends templateComponent {
     this.setState({post: post});
   }
 
+  dispatchComposerUpdates(post){
+    getComposerDispatch.dispatch({post: post});
+  }
+
   /*
   **
   ** Handle Headline update
@@ -141,6 +147,7 @@ class NeonComposer extends templateComponent {
           }
           self.setState({post: post});
           self.renderToComposer(post.body);
+          self.dispatchComposerUpdates(post);
         },
         error: function(err){
           console.log(err);
@@ -164,7 +171,8 @@ class NeonComposer extends templateComponent {
         header: this.state.post.header,
         slug: this.state.post.slug,
         source: this.state.post.source,
-        tags: this.state.post.tags
+        tags: this.state.post.tags,
+        categoryId: this.state.post.categoryId
       }
 
       $.ajax({
@@ -213,6 +221,14 @@ class NeonComposer extends templateComponent {
       self.setRouteData(data);
     });
 
+    this.setComposerDispatchToken = setComposerDispatch.register(function(data){
+      var post = JSON.parse(JSON.stringify(self.state.post));
+
+      post.category = data.category;
+      post.categoryId = data.category.id;
+      self.setState({post: post});
+    });
+
     // Setup event handlers
     this.savePost = this.savePost.bind(this);
     this.deletePost = this.deletePost.bind(this);
@@ -220,6 +236,7 @@ class NeonComposer extends templateComponent {
 
   componentWillUnmount(){
     routeStore.getDispatcher.unregister(this.routeDispatcherToken);
+    setComposerDispatch.unregister(this.setComposerDispatchToken);
 
     // Remove event handlers
     this.savePost = false;

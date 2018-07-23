@@ -5,7 +5,7 @@ module.exports = {
       {
         "@addChildBlock": {
           "name": "adminLink",
-          "component": "user/skin/react/components/loginLink",
+          "component": "admin/skin/react/components/adminLink",
           "reactTemplate": "admin/skin/react/templates/adminLink",
           "children": []
         }

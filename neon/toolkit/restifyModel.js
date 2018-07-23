@@ -88,10 +88,10 @@ module.exports = function(model, options, app){
   */
   app.post(path.join(Neon.config.apiEndpoint, model.name), function(req, res){
     handleRequestRestriction(req, restrictions['CREATE']).then(function(){
-      var params = req.body;
-      model.create(params).then(function(data){
-        if(typeof model.onRestifyCreateAssociation === 'function'){
-          model.onRestifyCreateAssociation(data, req.user, params).then(function(data){
+      var body = req.body;
+      model.create(body).then(function(data){
+        if(typeof model.onRestifyCreate === 'function'){
+          model.onRestifyCreate(data, req.user, body).then(function(data){
             res.send({type: 'success', message: 'Entry successfully created', data: data});
           });
         } else {
@@ -154,7 +154,13 @@ module.exports = function(model, options, app){
         model.findOne({where: where, attributes: {exclude: exclude}}).then(function(entry){
           if(entry){
             entry.update(body).then(function(data){
-              res.send({type: 'success', message: 'Entry successfully updated', data: data});
+              if(typeof model.onRestifyUpdate === 'function'){
+                model.onRestifyUpdate(data, req.user, body, params).then(function(data){
+                  res.send({type: 'success', message: 'Entry successfully updated', data: data});
+                });
+              } else {
+                res.send({type: 'success', message: 'Entry successfully updated', data: data});
+              }
             }).catch(function(err){
               res.status(404).send({type: 'error', message: 'Could not update entry'});
             });

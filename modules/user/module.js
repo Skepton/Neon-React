@@ -1,6 +1,6 @@
 var path = require('path'),
     passport = require('passport');
-var Neon_abstract = require(path.join(appRoot,'abstract/module'));
+var Neon_abstract = require(path.join(appRoot,'neon/abstract/module'));
 
 class Neon_user extends Neon_abstract {
   constructor(){
@@ -16,7 +16,6 @@ class Neon_user extends Neon_abstract {
   */
   init(){
     var self = this;
-    console.log(self.name+' Initiates');
     self.setupPassport();
     Neon.canary.on('neon:init_end', function(){
       self.setupUser();

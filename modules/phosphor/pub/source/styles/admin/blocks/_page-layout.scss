@@ -1,14 +1,16 @@
 $navigation__header--width: 175px !default;
 
-.admin-wrapper {
-  display: flex;
-  flex-direction: row;
-  #header {
-    width: $navigation__header--width;
-    height: 100vh;
-    max-height: 100vh;
+.admin {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    #header {
+      width: $navigation__header--width;
+      height: 100vh;
+      max-height: 100vh;
+    }
   }
-  .main-content {
+  &__content {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -17,6 +19,7 @@ $navigation__header--width: 175px !default;
     padding: 0;
     max-height: 100vh;
     transform: translate3d(0,0,0);
+    overflow-y: auto;
     #messages {
       flex-grow: 0;
     }

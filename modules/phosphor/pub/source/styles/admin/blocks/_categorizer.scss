@@ -23,18 +23,29 @@
     &__item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 0.75rem;
       margin: 0 0 0.5rem 0;
       background-color: white;
       .info-wrapper {
         display: flex;
         flex-direction: column;
+        margin-right: auto;
         .title {
           font-size: 1.25rem;
           font-weight: bold;
         }
         .slug {
           color: #888;
+        }
+      }
+      .remove-child-category {
+        cursor: pointer;
+      }
+      .add-child-category {
+        cursor: pointer;
+        i {
+          font-size: 2rem;
         }
       }
     }

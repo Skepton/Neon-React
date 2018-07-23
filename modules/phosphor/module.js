@@ -1,5 +1,5 @@
 var path = require('path');
-var Neon_module_abstract = require(path.join(appRoot,'abstract/module'));
+var Neon_module_abstract = require(path.join(appRoot,'/neon/abstract/module'));
 
 class Neon_phosphor_module extends Neon_module_abstract {
   constructor(){

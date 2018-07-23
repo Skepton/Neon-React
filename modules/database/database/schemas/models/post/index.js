@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize'),
     path = require('path'),
-    restifyModel = require(path.join(appRoot,'toolkit/neon/restifyModel.js')),
+    restifyModel = require(path.join(appRoot,'neon/toolkit/restifyModel.js')),
     crypto = require('crypto'),
     moment = require('moment');
 
@@ -76,8 +76,14 @@ module.exports.init = function(sequelize){
     }
   }
 
-  Post.onRestifyCreateAssociation = function(instance, currentUser, params){
+  Post.onRestifyCreate = function(instance, currentUser, postBody){
     return instance.setAuthor(currentUser);
+  }
+
+  Post.onRestifyUpdate = function(instance, currentUser, postBody, params){
+    return new Promise(function(resolve, reject){
+      resolve();
+    });
   }
 
   restifyModel(Post, options, Neon.app);
@@ -88,7 +94,7 @@ module.exports.init = function(sequelize){
       Post.belongsTo(models.user, {as: 'author', foreignKey: 'authorId'});
     }
     if(models.category){
-      Post.belongsTo(models.category, {as: 'category'});
+      Post.belongsTo(models.category, {as: 'category', foreignKey: 'categoryId'});
     }
 
     Post.afterCreate(function(instance){

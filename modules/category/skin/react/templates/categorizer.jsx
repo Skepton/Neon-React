@@ -41,13 +41,14 @@ module.exports = (component) =>
 
     <h2>Categories</h2>
     <div className="category-tree">
-      {component.state.categories.map((post) =>
-        <div className={'category-tree__item' + (post.isRoot ? ' category-tree__item--root' : '')} key={post.id} style={{marginLeft: post.level * 1.5 + 'rem'}}>
+      {component.state.categories.map((category) =>
+        <div className={'category-tree__item' + (category.isRoot ? ' category-tree__item--root' : '')} key={category.id} style={{marginLeft: category.level * 1.5 + 'rem', marginRight: category.level * 1.5 + 'rem'}}>
           <div className="info-wrapper">
-            <span className="title">{post.title}</span>
-            <span className="slug">{post.slug}</span>
+            <span className="title">{category.title}</span>
+            <span className="slug">{category.slug}</span>
           </div>
-          <button className="add-child-category" onClick={component.showChildCategoryForm.bind(component, post.id)}>Add Child</button>
+          <span className="add-child-category" onClick={component.showChildCategoryForm.bind(component, category.id)}><i className="material-icons">add_box</i></span>
+          <span className="remove-child-category" onClick={component.removeCategory.bind(component, category.id)}><i className="material-icons">indeterminate_check_box</i></span>
         </div>
       )}
       { component.state.categories.length <= 0 ? <p className="no-category notice">No categories exist!</p> : ''}

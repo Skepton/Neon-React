@@ -11,8 +11,7 @@ class NeonCategorizer extends templateComponent {
       showChildForm: false,
       parent: {},
       formData: {}
-    };
-    this.props = props;
+    }
     this.getCategories();
   }
 
@@ -30,15 +29,33 @@ class NeonCategorizer extends templateComponent {
     this.setState({showRootForm: true, formData: {}});
   }
 
-  showChildCategoryForm(id){
+  showChildCategoryForm(categoryId){
     var parentCategory = this.state.categories.filter((category) => {
-      if(category.id == id){
+      if(category.id == categoryId){
         return category;
       }
     });
 
     this.hideRootCategoryForm();
     this.setState({showChildForm: true, parent: parentCategory[0]});
+  }
+
+  removeCategory(categoryId){
+    var self = this;
+    $.ajax({
+      url: '/api/category/id/' + categoryId,
+      type: 'DELETE',
+      contentType: 'application/json',
+      success: function(response){
+        console.log('Delete Successful!');
+        self.hideChildCategoryForm();
+        self.hideRootCategoryForm();
+        self.getCategories();
+      },
+      error: function(err){
+        console.log(err);
+      }
+    });
   }
 
   handleFormInputUpdate(event){
@@ -85,6 +102,9 @@ class NeonCategorizer extends templateComponent {
       }
     });
 
+    // reverse order of categories
+    remainingCategories.reverse();
+
     var iterator = 0;
     while (remainingCategories.length > 0 && iterator <= 100) {
       iterator += 1;
@@ -96,6 +116,7 @@ class NeonCategorizer extends templateComponent {
         sortedCategories.forEach(function(sortedCategory, index){
           if(sortedCategory.id == parentId){
             parentLevel = sortedCategory.level;
+            sortedCategory.isParent = true;
             parentCategoryIndex = index;
           }
         });
@@ -141,7 +162,6 @@ class NeonCategorizer extends templateComponent {
       type: 'GET',
       dataType: 'json',
       success: function(categories){
-        self.setState({categories: categories});
         self.orderCategories(categories);
       },
       error: function(err){

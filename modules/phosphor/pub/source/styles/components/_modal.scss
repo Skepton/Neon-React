@@ -1,0 +1,31 @@
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: rgba(0,0,0,0.25);
+
+  &__isOpen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  & &__inner {
+    min-width: 75%;
+    max-width: 600px;
+    padding: 2rem;
+    background-color: white;
+  }
+}

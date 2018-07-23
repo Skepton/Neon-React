@@ -1,6 +1,6 @@
 var path = require('path'),
     passport = require('passport');
-var Neon_abstract = require(path.join(appRoot,'abstract/module'));
+var Neon_abstract = require(path.join(appRoot,'neon/abstract/module'));
 
 class Neon_admin extends Neon_abstract {
   constructor(){

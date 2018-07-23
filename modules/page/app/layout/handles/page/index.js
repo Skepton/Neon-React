@@ -11,16 +11,9 @@ module.exports = {
       "children": [
         {
           "name": "headerLinks",
-          "component": "page/skin/react/components/list",
-          "reactTemplate": "page/skin/react/templates/list",
-          "children": [
-            {
-              "name": "homeLink",
-              "component": "page/skin/react/components/template",
-              "reactTemplate": "page/skin/react/templates/homeLink",
-              "children": []
-            }
-          ]
+          "component": "page/skin/react/components/headerLinks",
+          "reactTemplate": "page/skin/react/templates/headerLinks",
+          "children": []
         }
       ]
     },

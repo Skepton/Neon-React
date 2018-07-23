@@ -1,7 +1,7 @@
 var path = require('path'),
     async = require('async'),
     Sequelize = require('sequelize'),
-    Neon_abstract_module = require(path.join(appRoot,'abstract/module'));
+    Neon_abstract_module = require(path.join(appRoot,'neon/abstract/module'));
 
 var sequelize = new Sequelize('neonDb', 'neon', 'neonpassword',{
   host: 'localhost',

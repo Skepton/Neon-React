@@ -1,7 +1,7 @@
 import templateComponent from 'page/skin/react/components/template';
 import userStore from 'user/skin/react/helpers/userStore';
 
-class NeonLoginLink extends templateComponent {
+class NeonAdminLink extends templateComponent {
 
   constructor(props){
     super(props);
@@ -19,6 +19,10 @@ class NeonLoginLink extends templateComponent {
     userStore.getDispatcher.unregister(this.userStoreToken);
   }
 
+  render() {
+    return this.state.user.admin ? this.template(this) : null;
+  }
+
 }
 
-module.exports = NeonLoginLink;
+module.exports = NeonAdminLink;

@@ -1,11 +1,20 @@
 import templateComponent from 'page/skin/react/components/template';
-import logo from '../../images/logo.png';
 
 class NeonHeader extends templateComponent {
 
   constructor(props){
     super(props);
-    this.logoSrc = logo;
+    this.state = {
+      isLinksMenuOpen: false
+    }
+  }
+
+  openLinksMenu(){
+    this.setState({linksMenuOpen: true});
+  }
+
+  closeLinksMenu(){
+    this.setState({linksMenuOpen: false});
   }
 
 }

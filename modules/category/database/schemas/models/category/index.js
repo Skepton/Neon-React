@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize'),
     path = require('path'),
     slugify = require(path.join(appRoot,'modules/category/app/helper/slugify.js')),
-    restifyModel = require(path.join(appRoot,'toolkit/neon/restifyModel.js'));
+    restifyModel = require(path.join(appRoot,'neon/toolkit/restifyModel.js'));
 
 module.exports.name = 'category';
 module.exports.init = function(sequelize){
@@ -67,12 +67,12 @@ module.exports.init = function(sequelize){
     }
   }
 
-  Category.onRestifyCreateAssociation = function(instance, currentUser, params){
+  Category.onRestifyCreate = function(instance, currentUser, postBody){
     var NeonDatabase = Neon.getModule('Neon_database');
 
     return new Promise(function(resolve, reject){
-      if(typeof params.associations != 'undefined' && typeof params.associations.parentId != 'undefined'){
-        NeonDatabase.schemas.category.findById(params.associations.parentId).then((category) => {
+      if(typeof postBody.associations != 'undefined' && typeof postBody.associations.parentId != 'undefined'){
+        NeonDatabase.schemas.category.findById(postBody.associations.parentId).then((category) => {
           instance.setParent(category).then(function(){
             resolve();
           });

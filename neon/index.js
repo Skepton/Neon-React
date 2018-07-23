@@ -2,7 +2,7 @@ var path = require('path'),
     async = require('async'),
     fs = require('fs'),
     ncp = require('ncp'),
-    canary = require(path.join(appRoot,'toolkit','neon','canary.js')),
+    canary = require(path.join(appRoot,'neon/toolkit/canary.js')),
     join = require('path').join;
 
 var exec = require('child_process').exec;

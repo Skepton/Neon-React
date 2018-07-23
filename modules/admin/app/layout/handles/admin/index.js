@@ -2,7 +2,7 @@ module.exports = {
   "name": "root",
   "component": "page/skin/react/components/template",
   "rootTemplate": "admin/main.html",
-  "reactTemplate": "page/skin/react/templates/root",
+  "reactTemplate": "admin/skin/react/templates/root",
   "children": [
     {
       "name": "header",

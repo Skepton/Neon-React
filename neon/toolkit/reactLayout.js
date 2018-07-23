@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
   parse: function(layout){
     var self = this;
@@ -6,8 +8,8 @@ module.exports = {
   renderComponent: function(block){
     var self = this;
     var children = block.children;
-    var parentComponent = require('../modules/'+block.component+'.jsx');
-    var parentTemplate = require('../modules/'+block.reactTemplate+'.jsx');
+    var parentComponent = require('../../modules/'+block.component+'.jsx');
+    var parentTemplate = require('../../modules/'+block.reactTemplate+'.jsx');
     var childrenComponents = [];
     if(children && children.length > 0){
       children.forEach(function(child){

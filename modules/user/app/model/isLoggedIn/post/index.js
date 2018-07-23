@@ -1,5 +1,5 @@
 var path = require('path'),
-    Neon_model_abstract = require(path.join(appRoot,'abstract/model')),
+    Neon_model_abstract = require(path.join(appRoot,'neon/abstract/model')),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     compareHash = Neon.getFile('app/helper/handlePassword').compareHash;

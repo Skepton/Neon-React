@@ -1,5 +1,5 @@
 var path = require('path'),
-    Neon_model_abstract = require(path.join(appRoot,'abstract/model'));
+    Neon_model_abstract = require(path.join(appRoot,'neon/abstract/model'));
 
 class Neon_model_user extends Neon_model_abstract {
 

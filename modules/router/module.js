@@ -1,10 +1,10 @@
 var path = require('path'),
-    nunjucks = require(path.join(appRoot,'toolkit','neon','nunjucksExtended.js')),
+    nunjucks = require(path.join(appRoot,'neon/toolkit/nunjucksExtended.js')),
     getNamespace = require('continuation-local-storage').getNamespace,
     context = getNamespace('com.neon'),
     async = require('async');
 
-var Neon_abstract = require(path.join(appRoot,'abstract/module'));
+var Neon_abstract = require(path.join(appRoot,'neon/abstract/module'));
 
 class Neon_router extends Neon_abstract {
   constructor(){
