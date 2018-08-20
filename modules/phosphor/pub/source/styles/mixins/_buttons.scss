@@ -1,0 +1,58 @@
+$button__background_color: #e1ecfe;
+$button__color: #256de9;
+$button__border-radius: $general__border-radius;
+
+@mixin button-primary($button__size: 'normal'){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    background-color: $button__background_color;
+    color: $button__color;
+    border-radius: $button__border-radius;
+    cursor: pointer;
+    -webkit-appearance: none;
+    border: none;
+    
+    @if $button__size == 'small' {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+    } @else if $button__size == 'normal' {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+    } @else if $button__size == 'large' {
+        padding: 1.25rem 3rem;
+        font-size: 1.2rem;
+    }
+
+    &:hover {
+        background-color: darken($button__background_color, 3%);
+    }
+}
+
+@mixin button-secondary($button__size: 'normal'){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    border: 1px solid $button__color;
+    color: $button__color;
+    border-radius: $button__border-radius;
+    cursor: pointer;
+    -webkit-appearance: none;
+    
+    @if $button__size == 'small' {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.8rem;
+    } @else if $button__size == 'normal' {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+    } @else if $button__size == 'large' {
+        padding: 1.25rem 3rem;
+        font-size: 1.2rem;
+    }
+
+    &:hover {
+        background-color: #ffffff;
+    }
+}

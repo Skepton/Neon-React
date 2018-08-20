@@ -1,0 +1,17 @@
+.login {
+    .form {
+        &__actions {
+            &-register {
+                margin-right: 3rem;
+                border-width: 0px;
+                border-right-width: 1px;
+                border-radius: 0;
+
+                &:hover {
+                    background-color: transparent;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

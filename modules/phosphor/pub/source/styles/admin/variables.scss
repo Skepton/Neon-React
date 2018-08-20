@@ -20,6 +20,6 @@ $color__action--cancel: #e81b54;
 $color__action--neutral: #2da6de;
 
 @import '../mixins/reset',
-        '../mixins/grid',
+        '../mixins/media-queries',
         '../mixins/info-bar',
         '../mixins/mdl-icons';

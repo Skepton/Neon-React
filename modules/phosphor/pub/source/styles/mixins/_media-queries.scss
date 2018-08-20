@@ -1,0 +1,24 @@
+$media__md: 768px !default;
+$media__lg: 1024px !default;
+$media__xl: $grid--max-width !default;
+
+@mixin media-sm {
+	@media only screen and (max-width: #{$media__md - 1}) {
+		@content;
+	}
+}
+@mixin media-md {
+	@media only screen and (min-width: #{$media__md}) {
+		@content;
+	}
+}
+@mixin media-lg {
+	@media only screen and (min-width: #{$media__lg}) {
+		@content;
+	}
+}
+@mixin media-xl {
+	@media only screen and (min-width: #{$media__xl}) {
+		@content;
+	}
+}

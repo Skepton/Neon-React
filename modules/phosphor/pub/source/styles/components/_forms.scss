@@ -1,0 +1,53 @@
+.form {
+    display: flex;
+    flex-direction: column;
+
+    &__field {
+        position: relative;
+        display: flex;
+        justify-content: stretch;
+        background-color: #ffffff;
+
+        &-label {
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            color: transparentize($neon__color--primary, 0.6);
+        }
+
+        &-input {
+            flex-grow: 1;
+            padding: 2.25rem 1.5rem 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            border: 1px solid #eaeaea;
+            border-bottom-width: 0;
+
+            &::placeholder {
+                color: #aaaaaa;
+            }
+
+            &:focus {
+                box-shadow: inset 3px 0 0 $neon__color--primary;
+                outline: none;
+            }
+        }
+
+        &--first &-input {
+            border-radius: $general--border-radius $general--border-radius 0 0;
+        }
+
+        &--last &-input {
+            border-bottom-width: 1px;
+            border-radius: 0 0 $general--border-radius $general--border-radius;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 2rem;
+    }
+}

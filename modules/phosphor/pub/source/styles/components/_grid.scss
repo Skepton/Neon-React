@@ -1,0 +1,114 @@
+// Variables
+$grid-columns: 12 !default;
+$grid-break-md: 768px !default;
+$grid-break-lg: 1024px !default;
+$grid-break-xl: $grid--max-width !default;
+
+// Mixins
+
+@mixin grid-row {
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+@mixin grid-col {
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	flex-grow: 1;
+}
+
+@mixin grid-col-width($width) {
+	$width-percent: percentage($width / $grid-columns);
+	width: $width-percent;
+}
+
+// Classes
+
+.ng__row {
+	@include grid-row;
+	padding: 2rem 0;
+
+	// Justify-content classes
+	&--hz-start {
+		justify-content: flex-start;
+	}
+	&--hz-center {
+		justify-content: center;
+	}
+	&--hz-end {
+		justify-content: flex-end;
+	}
+
+	
+	// Allow flex-direction-column without having to have separate rows
+	// and accounting for flex-direction swapping align-items / justify-content axis
+	&--dir-col {
+		flex-direction: column;
+
+		&.ng__row--hz-start {
+			justify-content: initial;
+			align-items: flex-start;
+		}
+		&.ng__row--hz-center {
+			justify-content: initial;
+			align-items: center;
+		}
+		&.ng__row--hz-end {
+			justify-content: initial;
+			align-items: flex-end;
+		}
+	}
+
+	// Turn off flex-wrap
+	&--no-wrap {
+		flex-wrap: nowrap;
+	}
+}
+
+.ng__col {
+	@include grid-col;
+	flex-grow: 1;
+	flex-basis: 0;
+	max-width: 100%;
+
+	// col-sm
+	@for $i from 1 through $grid-columns {
+		&--#{$i} {
+			@include grid-col;
+			@include grid-col-width($i);
+		}
+	}
+
+	// col-md
+	@include media-md {
+		@for $i from 1 through $grid-columns {
+			&--md-#{$i} {
+				@include grid-col;
+				@include grid-col-width($i);
+			}
+		}
+	}
+
+	// col-lg
+	@include media-lg {
+		@for $i from 1 through $grid-columns {
+			&--lg-#{$i} {
+				@include grid-col;
+				@include grid-col-width($i);
+			}
+		}
+	}
+
+	// col-xl
+	@include media-xl {
+		@for $i from 1 through $grid-columns {
+			&--xl-#{$i} {
+				@include grid-col;
+				@include grid-col-width($i);
+			}
+		}
+	}
+}

@@ -6,6 +6,8 @@ html, body {
 
 .page {
   &__wrapper {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     font-size: $general--font-size;
     font-family: $general--font-family;
@@ -13,6 +15,21 @@ html, body {
 
   &__content {
     flex-grow: 1;
-    background-color: white;
+    background-color: #f3f4f7;
+
+    &--inner {
+      // Something
+    }
   }
+
+  &__title {
+    margin: 2rem 0;
+    font-size: 4rem;
+    font-weight: 300;
+    color: $neon__color--primary;
+  }
+}
+
+.content-width {
+  max-width: $grid--max-width;
 }

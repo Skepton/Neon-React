@@ -1,6 +1,10 @@
 // General Blocks
-@import './blocks/page-layout',
-        './blocks/general',
+@import './blocks/general',
         './blocks/navigation';
 
-@import './components/button';
+@import './components/button',
+        './components/forms',
+        './components/grid';
+
+// Page specific
+@import './pages/login-register';
