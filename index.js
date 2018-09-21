@@ -9,7 +9,7 @@ var config = require(path.join(appRoot,'config')),
     http = require('http'),
     async = require('async'),
     //favicon = require('serve-favicon'),
-    redis = require("redis").createClient(),
+    redis = require("redis").createClient('6379','redis'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     nunjucks = require('nunjucks'),
@@ -23,6 +23,8 @@ var  app = express();
 app.set('view engine', 'html');
 app.set('view cache', false);
 
+var redisStore = new RedisStore({client: redis });
+
 app.use(express.static(path.join(__dirname, config.pubPath)))
    //.use(favicon())
    .use('/neon',express.static(path.join(__dirname, 'neon/frontend')))
@@ -30,7 +32,7 @@ app.use(express.static(path.join(__dirname, config.pubPath)))
    .use(bodyParser.json())
    .use(cookieParser())
    .use(session({
-     store: new RedisStore({client: redis }),
+     store: redisStore,
      secret: 'Tango Down',
      cookie: { /*secure : config.ssl,*/ maxAge : 604800000 },
      saveUninitialized: false,

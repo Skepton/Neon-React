@@ -21,7 +21,7 @@ module.exports = (component) =>
             <span className={'selector' + (component.state.selectedCategory && component.state.selectedCategory.id  === category.id ? ' selector--selected' : '')}
                   onClick={component.toggleSelected.bind(component, category)}>
 
-              {component.state.selectedCategory && component.state.selectedCategory.id === category.id ? <i class="material-icons">check</i> : ''}
+              {component.state.selectedCategory && component.state.selectedCategory.id === category.id ? <i className="material-icons">check</i> : ''}
             </span>
           </div>
         )}

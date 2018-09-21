@@ -16,7 +16,7 @@ function renderCategory(category, component){
 
 module.exports = (component) =>
 
-<div class="category-links__wrapper">
+<div className="category-links__wrapper">
   {component.state.categories.map((category) =>
     renderCategory(category, component)
   )}

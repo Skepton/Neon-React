@@ -3,8 +3,7 @@ var path = require('path'),
     Sequelize = require('sequelize'),
     Neon_abstract_module = require(path.join(appRoot,'neon/abstract/module'));
 
-var sequelize = new Sequelize('neonDb', 'neon', 'neonpassword',{
-  host: 'localhost',
+var sequelize = new Sequelize('postgresql://neon:neonpassword@postgresql:5432/neonDb', {
   dialect: 'postgres',
   logging: false,
   pool: {
