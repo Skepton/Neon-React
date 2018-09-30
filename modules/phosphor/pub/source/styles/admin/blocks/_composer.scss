@@ -16,16 +16,8 @@ section#composer {
     height: $composer-edit__bar--height;
     padding: 0.5rem;
     background-color: white;
-    #composer-form-submit {
-      padding: 0.75rem 1.5rem;
-      margin-left: 1rem;
-      font-size: 1rem;
-      letter-spacing: 2px;
-      background-color: $color__action--confirm;
-    }
     #delete-form-submit {
-      padding: 0.5rem 1.25rem;
-      background-color: $color__action--cancel;
+      margin-right: 1rem;
     }
   }
   & &__content {

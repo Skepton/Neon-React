@@ -23,7 +23,7 @@
     }
   }
 
-  &__menu {
+  &#{&}__menu {
     &-list {
       display: none;
       flex-direction: column;

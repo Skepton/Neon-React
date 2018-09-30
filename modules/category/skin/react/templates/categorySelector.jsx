@@ -3,7 +3,7 @@ module.exports = (component) =>
 <div className="category-selector">
   <button onClick={component.openCategorySelect.bind(component)}>Select Categories</button>
   <div className={'modal' + (component.state.modalOpen ? ' modal__isOpen' : '')}>
-    <button className="modal__close" onClick={component.closeCategorySelect.bind(component)}>Close</button>
+    <button className="button button__primary modal__close" onClick={component.closeCategorySelect.bind(component)}>Close</button>
     <div className="category-selector__content modal__inner">
       <div className="category-tree">
         {component.state.categories.map((category) =>

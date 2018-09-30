@@ -1,7 +1,7 @@
 module.exports = (component) =>
 <div className="categorizer layout">
   <div className="layout__bar">
-    <button type="submit" onClick={component.showRootCategoryForm.bind(component)}>New Root Category</button>
+    <button type="submit" className="button button__primary--small" onClick={component.showRootCategoryForm.bind(component)}>New Root Category</button>
   </div>
 
   <div className="layout__content">

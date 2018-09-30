@@ -29,7 +29,7 @@ var adminDestinationFile = 'admin.css';
 gulp.task('scss', function(){
   gulp.src(adminSource)
     .pipe(concat(adminDestinationFile))
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass.sync().on('error', sass.logError))
     // .pipe(postcss([ autoprefixer() ]))
     .pipe(gulp.dest(destinationFolder));
 

@@ -52,7 +52,7 @@
     "zepto": "1.2.0"
   },
   "scripts": {
-    "start": "npm install && npm run webpack && node index.js",
+    "start": "webpack && node index.js",
     "gulp": "gulp",
     "webpack": "webpack",
     "webpack-watch": "webpack --watch --progress"

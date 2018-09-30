@@ -1,8 +1,8 @@
 module.exports = (component) =>
  <div id="editor" className="composer-editor">
   <div className="composer-editor__bar">
-    <input id="delete-form-submit" type="submit" value="delete" onClick={component.deletePost} />
-    <input id="composer-form-submit" type="submit" value="save" onClick={component.savePost} />
+    <input id="delete-form-submit" type="submit" value="delete" onClick={component.deletePost} className="button button__secondary--small"/>
+    <input id="composer-form-submit" type="submit" value="save" onClick={component.savePost} className="button button__primary"/>
   </div>
   <div className="composer-editor__content">
 

@@ -11,7 +11,7 @@ module.exports = (component) =>
 			<input id="password" className="form__field-input" type="password" name="password" placeholder="*********" onChange={component.handlePasswordChange} required />
 		</div>
 		<div className="form__actions">
-			<button type="submit" className="button__primary--large form__actions-submit">Submit</button>
+			<button type="submit" className="button button__primary--large form__actions-submit">Submit</button>
 		</div>
 	</form>
 </div>

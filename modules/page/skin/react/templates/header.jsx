@@ -9,7 +9,7 @@ module.exports = (component) =>
          onMouseEnter={component.openLinksMenu.bind(component)}
          onMouseLeave={component.closeLinksMenu.bind(component)}>
       <div className={"button__menu" + (component.state.linksMenuOpen ? ' button__menu--open' : ' button__menu--closed')} >
-        <button className="button__meny-trigger button__primary">My Account</button>
+        <button className="button__meny-trigger button button__primary">My Account</button>
         {component.children.headerLinks}
       </div>
     </nav>
