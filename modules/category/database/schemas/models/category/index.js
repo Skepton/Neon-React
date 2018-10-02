@@ -38,6 +38,9 @@ module.exports.init = function(sequelize){
         this.setDataValue('slug', slugify(title));
         this.setDataValue('title', title);
         return title;
+      },
+      slug: function(slug){
+        console.log(this);
       }
     }
   });

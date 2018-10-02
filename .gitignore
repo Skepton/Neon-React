@@ -2,3 +2,5 @@ node_modules
 stats.json
 pub/*
 .vscode
+package-lock.json
+npm-debug.log

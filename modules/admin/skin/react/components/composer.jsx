@@ -1,5 +1,4 @@
 import templateComponent from 'page/skin/react/components/template';
-import Zepto from 'zepto';
 import hash from 'object-hash';
 import routeStore from 'router/skin/react/helpers/routeStore';
 

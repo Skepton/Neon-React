@@ -65,13 +65,13 @@ class Neon_database extends Neon_abstract_module {
           callback();
 
       }, function(){
-        sequelize.sync({force: true}).then(function(){
-          self.schemas.user.create({username: 'Skepton', password: 'blog', admin: true}).then(function(user){
+        sequelize.sync(/*{force: true}*/).then(function(){
+          /*self.schemas.user.create({username: 'Skepton', password: 'blog', admin: true}).then(function(user){
             console.log(user.get({plain: true}));
             self.schemas.user.create({username: 'Xeinon', password: 'notblog', admin: false}).then(function(user){
               console.log(user.get({plain: true}));
             });
-          });
+          });*/
         });
       });
     }).catch(function (err) {

@@ -12,7 +12,7 @@ class reactRouter extends React.Component {
       params: props.routeProps.match.params,
       generalLayout: layout,
       layout: false,
-      layoutHash: false
+      pageHash: false
     }
   }
 
@@ -27,8 +27,10 @@ class reactRouter extends React.Component {
   digestLayout(layoutObject) {
     var parsedLayout = reactLayout.parse(layoutObject);
     var hashLayout = hash(layoutObject);
+    var hashPath = hash(this.state.path);
+    var hashPage = hash(hashLayout + hashPath);
 
-    this.setState({parsedLayout: parsedLayout, 'layoutHash': hashLayout});
+    this.setState({parsedLayout: parsedLayout, 'pageHash': hashPage});
     localStorage.setItem('layout', JSON.stringify(layoutObject));
   }
 
@@ -84,9 +86,13 @@ class reactRouter extends React.Component {
     redirectDispatcher.unregister(this.redirectDispatcherToken);
   }
 
+  componentWillReceiveProps(data){
+    routeStore.setDispatcher.dispatch({path: data.route, params: data.routeProps.match.params});
+  }
+
   render() {
     var state = this.state;
-    return <state.parsedLayout.class layout={state.parsedLayout.block} template={state.parsedLayout.template} children={state.parsedLayout.children} key={state.layoutHash}/>;
+    return <state.parsedLayout.class layout={state.parsedLayout.block} template={state.parsedLayout.template} children={state.parsedLayout.children} key={state.pageHash}/>;
   }
 }
 

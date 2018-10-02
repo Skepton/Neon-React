@@ -17,7 +17,7 @@ module.exports = (component) =>
             </div>
           </div>
 
-          <button type="submit" value="newPost">Create</button>
+          <button type="submit" value="newPost" className="button button__primary--small">Create</button>
         </form>
       </div> : ''
     }
@@ -34,7 +34,7 @@ module.exports = (component) =>
             </div>
           </div>
 
-          <button type="submit" value="newPost">Create</button>
+          <button type="submit" value="newPost" className="button button__primary--small">Create</button>
         </form>
       </div> : ''
     }

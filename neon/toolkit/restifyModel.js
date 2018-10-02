@@ -61,7 +61,11 @@ module.exports = function(model, options, app){
       var where = {};
       where[endpoint] = params[endpoint];
       model.findOne({where: where, attributes: {exclude: exclude}}).then(function(data){
-        res.json(data);
+        if(typeof model.onRestifyGet === 'function'){
+          model.onRestifyGet(data, req.user, body, params).then(function(data){
+        } else {
+          res.json(data);
+        }
       });
     });
   });
